@@ -36,7 +36,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame mainFrame = this;
     
     private final String appTitle = "Lithuanian words dictionary generator";
-    private final String appVersion = "1.0";
+    private final String appVersion = "1.01";
     
     // Well, some of the numbers is what my GF told me that her friends use :D
     private final String defaultNumbers = 
