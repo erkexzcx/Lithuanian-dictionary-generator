@@ -57,7 +57,12 @@ public class MainFrame extends javax.swing.JFrame {
     public void setProgressBarStatus(int number){
         jprogressBar_progress.setValue(number);
         double progress = number * 100/jprogressBar_progress.getMaximum();
-        jprogressBar_progress.setString(String.format("%.2f%c", progress, '%'));
+        jprogressBar_progress.setString(String.format("%.0f%c", progress, '%'));
+    }
+    
+    public void setProgressBarCompleted(){
+        jprogressBar_progress.setValue(jprogressBar_progress.getMaximum());
+        jprogressBar_progress.setString(String.format("%s", "100%"));
     }
     
     public void unblockGenerateButton(){

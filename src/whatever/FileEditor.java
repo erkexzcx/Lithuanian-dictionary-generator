@@ -294,6 +294,7 @@ public class FileEditor extends Thread{
         bufferedWriter.flush();
         bufferedWriter.close();
         
+        accessBridge.setProgressBarCompleted();
         JOptionPane.showMessageDialog(null, "Done!");
         accessBridge.unblockGenerateButton();
     }
