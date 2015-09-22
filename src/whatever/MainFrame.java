@@ -5,8 +5,20 @@
  */
 package whatever;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -36,7 +48,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame mainFrame = this;
     
     private final String appTitle = "Lithuanian words dictionary generator";
-    private final String appVersion = "1.01";
+    private final String appVersion = "1.02";
     
     // Well, some of the numbers is what my GF told me that her friends use :D
     private final String defaultNumbers = 
@@ -47,27 +59,17 @@ public class MainFrame extends javax.swing.JFrame {
     // Shares between 2 buttons - current dictionary and it's new directory
     private File currentDictionaryFile = null;
     
-    // Being set when the method isInputCorrect() is executed.
-    // This is the Final string if the isInputCorrect() returned true.
+    public int threadsFinished;
     
-    public void setProgressBarMaxValue(int number){
-        jprogressBar_progress.setMaximum(number);
-    }
+    private Writer bufferedWriter = null;
+    private BufferedReader bufferedReader = null;
     
-    public void setProgressBarStatus(int number){
-        jprogressBar_progress.setValue(number);
-        double progress = number * 100/jprogressBar_progress.getMaximum();
-        jprogressBar_progress.setString(String.format("%.0f%c", progress, '%'));
-    }
+    private final int cores = Runtime.getRuntime().availableProcessors();
     
-    public void setProgressBarCompleted(){
-        jprogressBar_progress.setValue(jprogressBar_progress.getMaximum());
-        jprogressBar_progress.setString(String.format("%s", "100%"));
-    }
+    //For benchmarking
+    public static long startTime;
+    public static long stopTime;
     
-    public void unblockGenerateButton(){
-        jbutton_generate.setEnabled(true);
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -247,10 +249,53 @@ public class MainFrame extends javax.swing.JFrame {
     private void jbutton_resetToDefaultNumbersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbutton_resetToDefaultNumbersActionPerformed
         jtextArea_numbersAtTheEnd.setText(defaultNumbers);
     }//GEN-LAST:event_jbutton_resetToDefaultNumbersActionPerformed
-
+    
+        private boolean isInputGood(String input){
+        boolean good = true;
+        
+        // IF the first character is digit - OK.
+        if(!Character.isDigit(input.charAt(0))){
+            good = false;
+        }
+        
+        for(int x = 0; x<input.length(); x++){
+            if(!Character.isDigit(input.charAt(x)) && input.charAt(x)!=','){
+                // there is no true value
+                good = false;
+                break;
+            }
+        }
+        return good;
+    }
+    
+    private static int countLines(File filename) throws IOException {
+        InputStream is = new BufferedInputStream(new FileInputStream(filename));
+        try {
+            byte[] c = new byte[1024];
+            int count = 0;
+            int readChars = 0;
+            boolean empty = true;
+            while ((readChars = is.read(c)) != -1) {
+                empty = false;
+                for (int i = 0; i < readChars; ++i) {
+                    if (c[i] == '\n') {
+                        ++count;
+                    }
+                }
+            }
+            return (count == 0 && !empty) ? 1 : count;
+        } finally {
+            is.close();
+        }
+    }
+    
     private void jbutton_generateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbutton_generateActionPerformed
         
+        startTime = System.currentTimeMillis();
+        
         jbutton_generate.setEnabled(false);
+        
+        threadsFinished = 0;
         
         boolean numberAtTheEnd = jcheckBox_useNumbersAtTheEnd.isSelected();
         boolean replaceLtLetters = jcheckBox_convertLTUtoSimpleLetters.isSelected();
@@ -259,25 +304,101 @@ public class MainFrame extends javax.swing.JFrame {
         boolean convertEndings = jcheckBox_convertEndings.isSelected();
         String inputFromTheUser = jtextArea_numbersAtTheEnd.getText();
         
+        // Remove all spaces if any.
+        String newInput = inputFromTheUser.replaceAll("\\s","");
         
+        // Check whether the input is OK.
+        if(!isInputGood(newInput)){
+            return;
+        }
+        
+        // Split user input into array
+        String inputList[] = newInput.split(",");
+        int countertmp = 0;
+        for(int j=0; j<inputList.length; j++) {
+            if(inputList[j] != null) {
+                countertmp++;
+            }
+        }
+        int inputCount = countertmp;
         
         try {
-            Thread thread = new FileEditor(
-                    numberAtTheEnd,
-                    replaceLtLetters,
-                    useUppercaseLetters,
-                    useLowerCaseLetters,
-                    convertEndings,
-                    currentDictionaryFile,
-                    inputFromTheUser,
-                    mainFrame);
-            thread.start();
+            setProgressBarMaxValue(countLines(currentDictionaryFile));
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+        resetProgressBarStatus();
+
+        try {
+            bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(currentDictionaryFile.getAbsolutePath().substring(0, currentDictionaryFile.getAbsolutePath().lastIndexOf(File.separator)) + File.separator + "output.txt"), "Windows-1257"));
+        } catch (FileNotFoundException | UnsupportedEncodingException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(currentDictionaryFile), "Windows-1257"));
+        } catch (UnsupportedEncodingException | FileNotFoundException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ArrayList<Thread> threadList = new ArrayList<>();
+        
+        for(int x = 0; x<cores; x++){
+            try {
+                Thread thread = new ThreadClass(
+                        numberAtTheEnd,
+                        replaceLtLetters,
+                        useUppercaseLetters,
+                        useLowerCaseLetters,
+                        convertEndings,
+                        currentDictionaryFile,
+                        inputFromTheUser,
+                        mainFrame,
+                        bufferedReader,
+                        bufferedWriter,
+                        inputCount,
+                        inputList);
+                threadList.add(thread);
+            } catch (IOException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        for(Thread x:threadList){
+            x.start();
+        }
         
     }//GEN-LAST:event_jbutton_generateActionPerformed
-
+    
+    public void progressCounterPlusPlus() {
+        int value = jprogressBar_progress.getValue()+1;
+        jprogressBar_progress.setValue(value);
+        double progress = value * 100/jprogressBar_progress.getMaximum();
+        jprogressBar_progress.setString(String.format("%.0f%c", progress, '%'));
+    }
+    
+    public void resetProgressBarStatus(){
+        jprogressBar_progress.setValue(0);
+        jprogressBar_progress.setString(String.format("%s", "Ready"));
+    }
+    
+    public void setProgressBarMaxValue(int number){
+        jprogressBar_progress.setMaximum(number);
+    }
+    
+    public void threadFinished() throws IOException{
+        threadsFinished++;
+        if(threadsFinished==cores){
+            stopTime = System.currentTimeMillis();
+            jprogressBar_progress.setValue(jprogressBar_progress.getMaximum());
+            jprogressBar_progress.setString(String.format("%s", "100%"));
+            long time = stopTime-startTime;
+            JOptionPane.showMessageDialog(null, "Done in " + time + "ms!");
+            jbutton_generate.setEnabled(true);
+            bufferedReader.close();
+            bufferedWriter.flush();
+            bufferedWriter.close();
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -294,4 +415,5 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JProgressBar jprogressBar_progress;
     private javax.swing.JTextArea jtextArea_numbersAtTheEnd;
     // End of variables declaration//GEN-END:variables
+    
 }
