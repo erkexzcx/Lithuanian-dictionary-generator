@@ -48,7 +48,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame mainFrame = this;
     
     private final String appTitle = "Lithuanian words dictionary generator";
-    private final String appVersion = "1.02";
+    private final String appVersion = "1.03";
     
     // Well, some of the numbers is what my GF told me that her friends use :D
     private final String defaultNumbers = 
@@ -59,7 +59,7 @@ public class MainFrame extends javax.swing.JFrame {
     // Shares between 2 buttons - current dictionary and it's new directory
     private File currentDictionaryFile = null;
     
-    public int threadsFinished;
+    public static int threadsFinished;
     
     private Writer bufferedWriter = null;
     private BufferedReader bufferedReader = null;
@@ -295,6 +295,8 @@ public class MainFrame extends javax.swing.JFrame {
         
         jbutton_generate.setEnabled(false);
         
+        resetProgressBarStatus();
+        
         threadsFinished = 0;
         
         boolean numberAtTheEnd = jcheckBox_useNumbersAtTheEnd.isSelected();
@@ -327,7 +329,6 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        resetProgressBarStatus();
 
         try {
             bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(currentDictionaryFile.getAbsolutePath().substring(0, currentDictionaryFile.getAbsolutePath().lastIndexOf(File.separator)) + File.separator + "output.txt"), "Windows-1257"));
@@ -385,18 +386,15 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     public void threadFinished() throws IOException{
-        threadsFinished++;
-        if(threadsFinished==cores){
-            stopTime = System.currentTimeMillis();
-            jprogressBar_progress.setValue(jprogressBar_progress.getMaximum());
-            jprogressBar_progress.setString(String.format("%s", "100%"));
-            long time = stopTime-startTime;
-            JOptionPane.showMessageDialog(null, "Done in " + time + "ms!");
-            jbutton_generate.setEnabled(true);
-            bufferedReader.close();
-            bufferedWriter.flush();
-            bufferedWriter.close();
-        }
+        stopTime = System.currentTimeMillis();
+        jprogressBar_progress.setValue(jprogressBar_progress.getMaximum());
+        jprogressBar_progress.setString(String.format("%s", "100%"));
+        long time = stopTime-startTime;
+        JOptionPane.showMessageDialog(null, "Done in " + time + "ms!");
+        jbutton_generate.setEnabled(true);
+        bufferedReader.close();
+        bufferedWriter.flush();
+        bufferedWriter.close();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

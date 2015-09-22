@@ -32,6 +32,8 @@ public class ThreadClass extends Thread{
     private final BufferedReader bufferedReader;
     private final Writer bufferedWriter;
     
+    private final int cores = Runtime.getRuntime().availableProcessors();
+    
     private final int inputCount;
     private final String inputList[];
 
@@ -146,7 +148,10 @@ public class ThreadClass extends Thread{
                 }
                 accessBridge.progressCounterPlusPlus();
             }
-            accessBridge.threadFinished();
+            MainFrame.threadsFinished++;
+            if(MainFrame.threadsFinished == cores){
+                accessBridge.threadFinished();
+            }
         } catch (IOException ex) {
             Logger.getLogger(ThreadClass.class.getName()).log(Level.SEVERE, null, ex);
         }
