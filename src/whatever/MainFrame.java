@@ -42,9 +42,15 @@ public class MainFrame extends javax.swing.JFrame {
         this.jfield_existingDictionaryPath.setText("");
         jprogressBar_progress.setStringPainted(true);
         
+        //Create an information window just in RAM, but do not make it visible:
+        informationWindow = new InformationWindow();
+        informationWindow.setLocationRelativeTo(this);
+        informationWindow.setTitle("Information");
+        
         this.setVisible(true);
     }
     
+    private InformationWindow informationWindow;
     public MainFrame mainFrame = this;
     
     private final String appTitle = "Lithuanian words dictionary generator";
@@ -389,7 +395,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jcheckBox_useNumbersAtTheEndActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            
+        informationWindow.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
     
     public void progressCounterPlusPlus() {
