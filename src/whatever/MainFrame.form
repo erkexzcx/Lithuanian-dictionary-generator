@@ -28,7 +28,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jprogressBar_progress" max="32767" attributes="0"/>
-                  <Component id="jLabel2" pref="677" max="32767" attributes="0"/>
+                  <Component id="jLabel2" pref="747" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jbutton_chooseExistingDictionaryPath" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -41,11 +41,11 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jcheckBox_useLowercaseLetters" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jcheckBox_useCapitalLetters" alignment="0" min="-2" pref="199" max="-2" attributes="0"/>
+                          <Component id="jcheckBox_useLowercaseLetters" max="32767" attributes="0"/>
+                          <Component id="jcheckBox_useCapitalLetters" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jButton1" max="32767" attributes="0"/>
+                      <Component id="jButton1" min="-2" pref="200" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jbutton_generate" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
