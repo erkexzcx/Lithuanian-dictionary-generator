@@ -353,7 +353,7 @@ public class MainFrame extends javax.swing.JFrame {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(currentDictionaryFile), "Windows-1257"));
+            bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(currentDictionaryFile), "UTF-8"));
         } catch (UnsupportedEncodingException | FileNotFoundException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
