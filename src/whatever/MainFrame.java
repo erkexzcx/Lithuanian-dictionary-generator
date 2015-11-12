@@ -437,7 +437,7 @@ public class MainFrame extends javax.swing.JFrame {
         jprogressBar_progress.setValue(jprogressBar_progress.getMaximum());
         jprogressBar_progress.setString(String.format("%s", "100%"));
         long time = stopTime-startTime;
-        JOptionPane.showMessageDialog(null, "Done in " + time + "ms!");
+        JOptionPane.showMessageDialog(null, "Done in " + time + "ms! " + textField_newOutputName.getText() + " is stored at the same location.");
         jbutton_generate.setEnabled(true);
         bufferedReader.close();
         bufferedWriter.flush();
