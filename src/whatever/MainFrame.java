@@ -54,7 +54,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame mainFrame = this;
     
     private final String appTitle = "Lithuanian words dictionary generator";
-    private final String appVersion = "1.05"; //will be used for releases only
+    private final String appVersion = "1.06"; //will be used for releases only
     
     // Well, some of the numbers is what my GF told me that her friends use :D
     private final String defaultNumbers = 
@@ -98,9 +98,10 @@ public class MainFrame extends javax.swing.JFrame {
         jcheckBox_useLowercaseLetters = new javax.swing.JCheckBox();
         jcheckBox_convertEndings = new javax.swing.JCheckBox();
         jbutton_generate = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jprogressBar_progress = new javax.swing.JProgressBar();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        textField_newOutputName = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -163,12 +164,6 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("New generated dictionary will be at the same directory! named \"output.txt\"");
-        jLabel2.setFocusable(false);
-        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
         jButton1.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         jButton1.setText("Help / Information");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -176,6 +171,11 @@ public class MainFrame extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        jLabel1.setText("New name:");
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+
+        textField_newOutputName.setText("Output.txt");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -185,30 +185,32 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jprogressBar_progress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 747, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbutton_chooseExistingDictionaryPath)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jfield_existingDictionaryPath))
+                    .addComponent(jbutton_generate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jcheckBox_convertLTUtoSimpleLetters, javax.swing.GroupLayout.PREFERRED_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(jcheckBox_convertEndings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jcheckBox_convertLTUtoSimpleLetters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jcheckBox_convertEndings, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jcheckBox_useLowercaseLetters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jcheckBox_useCapitalLetters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jbutton_generate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jbutton_resetToDefaultNumbers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jcheckBox_useNumbersAtTheEnd)
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jbutton_chooseExistingDictionaryPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jfield_existingDictionaryPath)
+                            .addComponent(textField_newOutputName)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jcheckBox_useNumbersAtTheEnd)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jbutton_resetToDefaultNumbers)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -219,30 +221,31 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jbutton_chooseExistingDictionaryPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jfield_existingDictionaryPath))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textField_newOutputName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jcheckBox_useCapitalLetters, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jcheckBox_convertEndings, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jcheckBox_convertLTUtoSimpleLetters, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jcheckBox_useLowercaseLetters, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jcheckBox_useLowercaseLetters, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcheckBox_convertLTUtoSimpleLetters, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jcheckBox_useNumbersAtTheEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
-                        .addComponent(jbutton_resetToDefaultNumbers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jcheckBox_useNumbersAtTheEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jbutton_resetToDefaultNumbers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jprogressBar_progress, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbutton_generate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -322,6 +325,21 @@ public class MainFrame extends javax.swing.JFrame {
         boolean useLowerCaseLetters = jcheckBox_useLowercaseLetters.isSelected();
         boolean convertEndings = jcheckBox_convertEndings.isSelected();
         String inputFromTheUser = jtextArea_numbersAtTheEnd.getText();
+        String newOutputName = textField_newOutputName.getText();
+        
+        //set default output name if nothing is enterred:
+        if("".equals(newOutputName)){
+            newOutputName="Output.txt";
+            textField_newOutputName.setText(newOutputName);
+        }
+        if(newOutputName.charAt(newOutputName.length()-1)=='.'){
+            newOutputName = String.format("%s%s", newOutputName, "txt");
+            textField_newOutputName.setText(newOutputName);
+        }
+        if(newOutputName.contains(".")==false){
+            newOutputName = String.format("%s%s", newOutputName, ".txt");
+            textField_newOutputName.setText(newOutputName);
+        }
         
         // Remove all spaces if any.
         String newInput = inputFromTheUser.replaceAll("\\s","");
@@ -348,7 +366,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
         try {
-            bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(currentDictionaryFile.getAbsolutePath().substring(0, currentDictionaryFile.getAbsolutePath().lastIndexOf(File.separator)) + File.separator + "output.txt"), "Windows-1257"));
+            bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(currentDictionaryFile.getAbsolutePath().substring(0, currentDictionaryFile.getAbsolutePath().lastIndexOf(File.separator)) + File.separator + newOutputName), "Windows-1257"));
         } catch (FileNotFoundException | UnsupportedEncodingException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -428,7 +446,7 @@ public class MainFrame extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbutton_chooseExistingDictionaryPath;
     private javax.swing.JButton jbutton_generate;
@@ -441,6 +459,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jfield_existingDictionaryPath;
     private javax.swing.JProgressBar jprogressBar_progress;
     private javax.swing.JTextArea jtextArea_numbersAtTheEnd;
+    private javax.swing.JTextField textField_newOutputName;
     // End of variables declaration//GEN-END:variables
     
 }

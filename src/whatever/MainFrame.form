@@ -28,16 +28,11 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jprogressBar_progress" max="32767" attributes="0"/>
-                  <Component id="jLabel2" pref="747" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="jbutton_chooseExistingDictionaryPath" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jfield_existingDictionaryPath" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="jbutton_generate" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jcheckBox_convertLTUtoSimpleLetters" pref="173" max="32767" attributes="0"/>
-                          <Component id="jcheckBox_convertEndings" max="32767" attributes="0"/>
+                          <Component id="jcheckBox_convertLTUtoSimpleLetters" max="32767" attributes="0"/>
+                          <Component id="jcheckBox_convertEndings" min="-2" pref="173" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -47,17 +42,25 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jButton1" min="-2" pref="200" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jbutton_generate" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jbutton_resetToDefaultNumbers" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jcheckBox_useNumbersAtTheEnd" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jLabel1" max="32767" attributes="0"/>
+                          <Component id="jbutton_chooseExistingDictionaryPath" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="498" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jfield_existingDictionaryPath" max="32767" attributes="0"/>
+                          <Component id="textField_newOutputName" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="jcheckBox_useNumbersAtTheEnd" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jbutton_resetToDefaultNumbers" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -73,36 +76,37 @@
                   <Component id="jfield_existingDictionaryPath" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel2" min="-2" pref="18" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel1" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
+                  <Component id="textField_newOutputName" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jcheckBox_useCapitalLetters" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
                           <Component id="jcheckBox_convertEndings" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jcheckBox_convertLTUtoSimpleLetters" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
-                          <Component id="jcheckBox_useLowercaseLetters" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jcheckBox_useLowercaseLetters" min="-2" pref="19" max="-2" attributes="0"/>
+                          <Component id="jcheckBox_convertLTUtoSimpleLetters" alignment="0" min="-2" pref="19" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="jButton1" alignment="1" min="-2" pref="45" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="jcheckBox_useNumbersAtTheEnd" min="-2" pref="19" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                      <Component id="jbutton_resetToDefaultNumbers" max="32767" attributes="0"/>
-                  </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jcheckBox_useNumbersAtTheEnd" min="-2" pref="19" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jbutton_resetToDefaultNumbers" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="60" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jprogressBar_progress" min="-2" pref="25" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jbutton_generate" min="-2" pref="40" max="-2" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -198,17 +202,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbutton_generateActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="11" style="3"/>
-        </Property>
-        <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="New generated dictionary will be at the same directory! named &quot;output.txt&quot;"/>
-        <Property name="focusable" type="boolean" value="false"/>
-        <Property name="horizontalTextPosition" type="int" value="0"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JProgressBar" name="jprogressBar_progress">
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
@@ -221,6 +214,17 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="New name:"/>
+        <Property name="horizontalTextPosition" type="int" value="4"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textField_newOutputName">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Output.txt"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
