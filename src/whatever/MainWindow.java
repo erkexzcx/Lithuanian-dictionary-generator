@@ -23,17 +23,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import org.mozilla.universalchardet.UniversalDetector;
 
 /**
  *
  * @author Erikas
  */
-public class MainFrame extends javax.swing.JFrame {
+public class MainWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form MainFrame
      */
-    public MainFrame() {
+    public MainWindow() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle(String.format("%s - Version %s", appTitle, appVersion));
@@ -51,10 +52,10 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     private InformationWindow informationWindow;
-    public MainFrame mainFrame = this;
+    public MainWindow mainFrame = this;
     
     private final String appTitle = "Lithuanian words dictionary generator";
-    private final String appVersion = "1.06"; //will be used for releases only
+    private final String appVersion = "1.07"; //will be used for releases only
     
     // Well, some of the numbers is what my GF told me that her friends use :D
     private final String defaultNumbers = 
@@ -309,6 +310,27 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }
     
+    // if nothing is detected, then it's UTF-8
+    private String getEncoding(File file) throws FileNotFoundException, IOException{
+        byte[] buf = new byte[4096];
+        java.io.FileInputStream fis = new java.io.FileInputStream(file);
+        UniversalDetector detector = new UniversalDetector(null);
+        int nread;
+        while ((nread = fis.read(buf)) > 0 && !detector.isDone()) {
+            detector.handleData(buf, 0, nread);
+        }
+        detector.dataEnd();
+        String encoding = detector.getDetectedCharset();
+        String encodingToReturn;
+        if (encoding != null) {
+            encodingToReturn = encoding;
+        }else{
+            encodingToReturn = "UTF-8";
+        }
+        detector.reset();
+        return encodingToReturn;
+    }
+    
     private void jbutton_generateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbutton_generateActionPerformed
         
         startTime = System.currentTimeMillis();
@@ -362,18 +384,26 @@ public class MainFrame extends javax.swing.JFrame {
         try {
             setProgressBarMaxValue(countLines(currentDictionaryFile));
         } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         try {
-            bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(currentDictionaryFile.getAbsolutePath().substring(0, currentDictionaryFile.getAbsolutePath().lastIndexOf(File.separator)) + File.separator + newOutputName), "Windows-1257"));
+            if(replaceLtLetters){
+                bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(currentDictionaryFile.getAbsolutePath().substring(0, currentDictionaryFile.getAbsolutePath().lastIndexOf(File.separator)) + File.separator + newOutputName), "UTF-8"));
+            }else{
+                bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(currentDictionaryFile.getAbsolutePath().substring(0, currentDictionaryFile.getAbsolutePath().lastIndexOf(File.separator)) + File.separator + newOutputName), getEncoding(currentDictionaryFile)));
+            }     
         } catch (FileNotFoundException | UnsupportedEncodingException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(currentDictionaryFile), "UTF-8"));
+            bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(currentDictionaryFile), getEncoding(currentDictionaryFile)));
         } catch (UnsupportedEncodingException | FileNotFoundException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         ArrayList<Thread> threadList = new ArrayList<>();
@@ -395,7 +425,7 @@ public class MainFrame extends javax.swing.JFrame {
                         inputList);
                 threadList.add(thread);
             } catch (IOException ex) {
-                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         for(Thread x:threadList){

@@ -28,7 +28,7 @@ public class ThreadClass extends Thread{
     private final boolean convertEndings;
     private final boolean addNumbersAtTheEnd;
     private final File originalDictionary;
-    private final MainFrame accessBridge;
+    private final MainWindow accessBridge;
     private final BufferedReader bufferedReader;
     private final Writer bufferedWriter;
     
@@ -45,7 +45,7 @@ public class ThreadClass extends Thread{
                 boolean convertEndings,
                 File originalDictionary,
                 String input,
-                MainFrame accessBridge,
+                MainWindow accessBridge,
                 BufferedReader bufferedReader,
                 Writer bufferedWriter,
                 int inputCount,
@@ -148,8 +148,8 @@ public class ThreadClass extends Thread{
                 }
                 accessBridge.progressCounterPlusPlus();
             }
-            MainFrame.threadsFinished++;
-            if(MainFrame.threadsFinished == cores){
+            MainWindow.threadsFinished++;
+            if(MainWindow.threadsFinished == cores){
                 accessBridge.threadFinished();
             }
         } catch (IOException ex) {
