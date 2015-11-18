@@ -70,7 +70,7 @@
     nbproject/build-impl.xml file. 
 
     -->
-<target name="package-for-store" depends="jar">
+    <target name="package-for-store" depends="jar">
 
         <!-- Change the value of this property to be the name of your JAR,
              minus the .jar extension. It should not have spaces.

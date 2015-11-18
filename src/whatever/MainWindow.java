@@ -39,45 +39,47 @@ public class MainWindow extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle(String.format("%s - Version %s", appTitle, appVersion));
         jtextArea_numbersAtTheEnd.setLineWrap(true);
-        jtextArea_numbersAtTheEnd.setText(defaultNumbers);
+        jtextArea_numbersAtTheEnd.setText(defaultNumbersCommon);
         this.jfield_existingDictionaryPath.setText("");
         jprogressBar_progress.setStringPainted(true);
-        
+
         //Create an information window just in RAM, but do not make it visible:
         informationWindow = new InformationWindow();
         informationWindow.setLocationRelativeTo(this);
         informationWindow.setTitle("Information");
-        
+
         this.setVisible(true);
     }
-    
+
     private InformationWindow informationWindow;
     public MainWindow mainFrame = this;
-    
+
     private final String appTitle = "Lithuanian words dictionary generator";
-    private final String appVersion = "1.07"; //will be used for releases only
-    
+    private final String appVersion = "1.08"; //will be used for releases only
+
     // Well, some of the numbers is what my GF told me that her friends use :D
-    private final String defaultNumbers = 
-            "1, 12, 21, 23, 32, 123, 321, 122, 322, 223, 112, 01, 09, 08, 07, 06,"
-            + " 05, 04, 03, 02, 0, 001, 007, 10, 11, 12, 13, 14, 15, 16, 17, 18,"
-            + " 19, 20, 69, 96, 963, 369, 34, 45, 56, 67, 78, 89, 90, 98, 87, 76,"
-            + " 65, 54, 43, 951, 159";
-    
-    // Shares between 2 buttons - current dictionary and it's new directory
+    private final String defaultNumbersMost = "1, 12, 21, 23, 32, 123, 321, 122, "
+            + "322, 223, 112, 01, 09, 08, 07, 06, 05, 04, 03, 02, 0, 001, 007, "
+            + "10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 91, 92, 93, 94, 95, "
+            + "96, 97, 98, 99, 00, 69, 96, 963, 369, 34, 45, 56, 67, 78, 89, 90, "
+            + "98, 87, 76, 65, 54, 43, 951, 159";
+    private final String defaultNumbersCommon = "1, 0, 01, 12, 21, 23, 32, 123, 321, "
+            + "122, 322, 223, 112, 911, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 91, "
+            + "92, 93, 94, 95, 96, 97, 98, 99, 00";
+    private final String defaultNumbersBasic = "1, 0, 01, 123, 321, 12, 21, 23, 32";
+
     private File currentDictionaryFile = null;
-    
+
     public static int threadsFinished;
-    
+
     private Writer bufferedWriter = null;
     private BufferedReader bufferedReader = null;
-    
+
     private final int cores = Runtime.getRuntime().availableProcessors();
-    
+
     //For benchmarking
     public static long startTime;
     public static long stopTime;
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -92,7 +94,6 @@ public class MainWindow extends javax.swing.JFrame {
         jfield_existingDictionaryPath = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtextArea_numbersAtTheEnd = new javax.swing.JTextArea();
-        jbutton_resetToDefaultNumbers = new javax.swing.JButton();
         jcheckBox_useNumbersAtTheEnd = new javax.swing.JCheckBox();
         jcheckBox_convertLTUtoSimpleLetters = new javax.swing.JCheckBox();
         jcheckBox_useCapitalLetters = new javax.swing.JCheckBox();
@@ -103,6 +104,9 @@ public class MainWindow extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         textField_newOutputName = new javax.swing.JTextField();
+        button_defaultNumbersMost = new javax.swing.JButton();
+        button_defaultNumbersCommon = new javax.swing.JButton();
+        button_defaultNumbersBasic = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -121,15 +125,8 @@ public class MainWindow extends javax.swing.JFrame {
         jtextArea_numbersAtTheEnd.setColumns(20);
         jtextArea_numbersAtTheEnd.setRows(5);
         jtextArea_numbersAtTheEnd.setToolTipText("Numbers must be separated by a commas only. No other symbols, just only numbers, commas and spaces!");
+        jtextArea_numbersAtTheEnd.setWrapStyleWord(true);
         jScrollPane1.setViewportView(jtextArea_numbersAtTheEnd);
-
-        jbutton_resetToDefaultNumbers.setText("Reset to default");
-        jbutton_resetToDefaultNumbers.setToolTipText("Overwrite what was entered to the field by the user to default numbers.");
-        jbutton_resetToDefaultNumbers.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbutton_resetToDefaultNumbersActionPerformed(evt);
-            }
-        });
 
         jcheckBox_useNumbersAtTheEnd.setSelected(true);
         jcheckBox_useNumbersAtTheEnd.setText("Use given numbers at the end:");
@@ -145,11 +142,11 @@ public class MainWindow extends javax.swing.JFrame {
         jcheckBox_convertLTUtoSimpleLetters.setToolTipText("This will replace lithuanian symbols. Example: ą -> a, ž -> z...");
 
         jcheckBox_useCapitalLetters.setSelected(true);
-        jcheckBox_useCapitalLetters.setText("Use capital only at the beginning.");
+        jcheckBox_useCapitalLetters.setText("Starts with UPPERCASE letter");
         jcheckBox_useCapitalLetters.setToolTipText("If none of these 2 are selected, the beginning letters won't be changed!");
 
         jcheckBox_useLowercaseLetters.setSelected(true);
-        jcheckBox_useLowercaseLetters.setText("Use lowecase only at the beginning.");
+        jcheckBox_useLowercaseLetters.setText("Starts with lowercase letter");
         jcheckBox_useLowercaseLetters.setToolTipText("If none of these 2 are selected, the beginning letters won't be changed!");
 
         jcheckBox_convertEndings.setText("Convert endings.");
@@ -178,6 +175,27 @@ public class MainWindow extends javax.swing.JFrame {
 
         textField_newOutputName.setText("Output.txt");
 
+        button_defaultNumbersMost.setText("Most");
+        button_defaultNumbersMost.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_defaultNumbersMostActionPerformed(evt);
+            }
+        });
+
+        button_defaultNumbersCommon.setText("Common");
+        button_defaultNumbersCommon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_defaultNumbersCommonActionPerformed(evt);
+            }
+        });
+
+        button_defaultNumbersBasic.setText("Basic");
+        button_defaultNumbersBasic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_defaultNumbersBasicActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -205,13 +223,16 @@ public class MainWindow extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jfield_existingDictionaryPath)
                             .addComponent(textField_newOutputName)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jcheckBox_useNumbersAtTheEnd)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbutton_resetToDefaultNumbers)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1)))
+                        .addComponent(button_defaultNumbersBasic, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_defaultNumbersCommon, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_defaultNumbersMost, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -237,16 +258,18 @@ public class MainWindow extends javax.swing.JFrame {
                             .addComponent(jcheckBox_convertLTUtoSimpleLetters, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jcheckBox_useNumbersAtTheEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jbutton_resetToDefaultNumbers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button_defaultNumbersBasic)
+                    .addComponent(button_defaultNumbersCommon)
+                    .addComponent(button_defaultNumbersMost)
+                    .addComponent(jcheckBox_useNumbersAtTheEnd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jprogressBar_progress, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbutton_generate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -255,32 +278,27 @@ public class MainWindow extends javax.swing.JFrame {
     //All done with this method. Checked twice, so far so good.
     //It stores it's file with its information on private File named "currentDictionaryFile".
     private void jbutton_chooseExistingDictionaryPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbutton_chooseExistingDictionaryPathActionPerformed
-            JFileChooser jfileChooser_existingFile = new JFileChooser();
-            File directory = new File(System.getProperty("user.home"));
-            jfileChooser_existingFile.setCurrentDirectory(directory);
-            int returnVal = jfileChooser_existingFile.showOpenDialog(null);
-            if(returnVal == JFileChooser.APPROVE_OPTION){
-                currentDictionaryFile = jfileChooser_existingFile.getSelectedFile();
-                jfield_existingDictionaryPath.setText(jfileChooser_existingFile.getSelectedFile().getAbsolutePath());
-                jbutton_generate.setEnabled(true);
-            }
+        JFileChooser jfileChooser_existingFile = new JFileChooser();
+        File directory = new File(System.getProperty("user.home"));
+        jfileChooser_existingFile.setCurrentDirectory(directory);
+        int returnVal = jfileChooser_existingFile.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            currentDictionaryFile = jfileChooser_existingFile.getSelectedFile();
+            jfield_existingDictionaryPath.setText(jfileChooser_existingFile.getSelectedFile().getAbsolutePath());
+            jbutton_generate.setEnabled(true);
+        }
     }//GEN-LAST:event_jbutton_chooseExistingDictionaryPathActionPerformed
 
-    // All done with this method. Checked twice.
-    private void jbutton_resetToDefaultNumbersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbutton_resetToDefaultNumbersActionPerformed
-        jtextArea_numbersAtTheEnd.setText(defaultNumbers);
-    }//GEN-LAST:event_jbutton_resetToDefaultNumbersActionPerformed
-    
-        private boolean isInputGood(String input){
+    private boolean isInputGood(String input) {
         boolean good = true;
-        
+
         // IF the first character is digit - OK.
-        if(!Character.isDigit(input.charAt(0))){
+        if (!Character.isDigit(input.charAt(0))) {
             good = false;
         }
-        
-        for(int x = 0; x<input.length(); x++){
-            if(!Character.isDigit(input.charAt(x)) && input.charAt(x)!=','){
+
+        for (int x = 0; x < input.length(); x++) {
+            if (!Character.isDigit(input.charAt(x)) && input.charAt(x) != ',') {
                 // there is no true value
                 good = false;
                 break;
@@ -288,7 +306,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
         return good;
     }
-    
+
     private static int countLines(File filename) throws IOException {
         InputStream is = new BufferedInputStream(new FileInputStream(filename));
         try {
@@ -309,9 +327,9 @@ public class MainWindow extends javax.swing.JFrame {
             is.close();
         }
     }
-    
+
     // if nothing is detected, then it's UTF-8
-    private String getEncoding(File file) throws FileNotFoundException, IOException{
+    private String getEncoding(File file) throws FileNotFoundException, IOException {
         byte[] buf = new byte[4096];
         java.io.FileInputStream fis = new java.io.FileInputStream(file);
         UniversalDetector detector = new UniversalDetector(null);
@@ -324,23 +342,23 @@ public class MainWindow extends javax.swing.JFrame {
         String encodingToReturn;
         if (encoding != null) {
             encodingToReturn = encoding;
-        }else{
+        } else {
             encodingToReturn = "UTF-8";
         }
         detector.reset();
         return encodingToReturn;
     }
-    
+
     private void jbutton_generateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbutton_generateActionPerformed
-        
+
         startTime = System.currentTimeMillis();
-        
+
         jbutton_generate.setEnabled(false);
-        
+
         resetProgressBarStatus();
-        
+
         threadsFinished = 0;
-        
+
         boolean numberAtTheEnd = jcheckBox_useNumbersAtTheEnd.isSelected();
         boolean replaceLtLetters = jcheckBox_convertLTUtoSimpleLetters.isSelected();
         boolean useUppercaseLetters = jcheckBox_useCapitalLetters.isSelected();
@@ -348,39 +366,39 @@ public class MainWindow extends javax.swing.JFrame {
         boolean convertEndings = jcheckBox_convertEndings.isSelected();
         String inputFromTheUser = jtextArea_numbersAtTheEnd.getText();
         String newOutputName = textField_newOutputName.getText();
-        
+
         //set default output name if nothing is enterred:
-        if("".equals(newOutputName)){
-            newOutputName="Output.txt";
+        if ("".equals(newOutputName)) {
+            newOutputName = "Output.txt";
             textField_newOutputName.setText(newOutputName);
         }
-        if(newOutputName.charAt(newOutputName.length()-1)=='.'){
+        if (newOutputName.charAt(newOutputName.length() - 1) == '.') {
             newOutputName = String.format("%s%s", newOutputName, "txt");
             textField_newOutputName.setText(newOutputName);
         }
-        if(newOutputName.contains(".")==false){
+        if (newOutputName.contains(".") == false) {
             newOutputName = String.format("%s%s", newOutputName, ".txt");
             textField_newOutputName.setText(newOutputName);
         }
-        
+
         // Remove all spaces if any.
-        String newInput = inputFromTheUser.replaceAll("\\s","");
-        
+        String newInput = inputFromTheUser.replaceAll("\\s", "");
+
         // Check whether the input is OK.
-        if(!isInputGood(newInput)){
+        if (!isInputGood(newInput)) {
             return;
         }
-        
+
         // Split user input into array
         String inputList[] = newInput.split(",");
         int countertmp = 0;
-        for(int j=0; j<inputList.length; j++) {
-            if(inputList[j] != null) {
+        for (int j = 0; j < inputList.length; j++) {
+            if (inputList[j] != null) {
                 countertmp++;
             }
         }
         int inputCount = countertmp;
-        
+
         try {
             setProgressBarMaxValue(countLines(currentDictionaryFile));
         } catch (IOException ex) {
@@ -388,11 +406,11 @@ public class MainWindow extends javax.swing.JFrame {
         }
 
         try {
-            if(replaceLtLetters){
+            if (replaceLtLetters) {
                 bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(currentDictionaryFile.getAbsolutePath().substring(0, currentDictionaryFile.getAbsolutePath().lastIndexOf(File.separator)) + File.separator + newOutputName), "UTF-8"));
-            }else{
+            } else {
                 bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(currentDictionaryFile.getAbsolutePath().substring(0, currentDictionaryFile.getAbsolutePath().lastIndexOf(File.separator)) + File.separator + newOutputName), getEncoding(currentDictionaryFile)));
-            }     
+            }
         } catch (FileNotFoundException | UnsupportedEncodingException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -405,10 +423,10 @@ public class MainWindow extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         ArrayList<Thread> threadList = new ArrayList<>();
-        
-        for(int x = 0; x<cores; x++){
+
+        for (int x = 0; x < cores; x++) {
             try {
                 Thread thread = new ThreadClass(
                         numberAtTheEnd,
@@ -428,59 +446,80 @@ public class MainWindow extends javax.swing.JFrame {
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        for(Thread x:threadList){
+        for (Thread x : threadList) {
             x.start();
         }
-        
+
     }//GEN-LAST:event_jbutton_generateActionPerformed
 
     private void jcheckBox_useNumbersAtTheEndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcheckBox_useNumbersAtTheEndActionPerformed
-        if(jcheckBox_useNumbersAtTheEnd.isSelected()){
+        if (jcheckBox_useNumbersAtTheEnd.isSelected()) {
             jtextArea_numbersAtTheEnd.setEnabled(true);
-        }else{
+            button_defaultNumbersBasic.setEnabled(true);
+            button_defaultNumbersCommon.setEnabled(true);
+            button_defaultNumbersMost.setEnabled(true);
+
+        } else {
             jtextArea_numbersAtTheEnd.setEnabled(false);
+            button_defaultNumbersBasic.setEnabled(false);
+            button_defaultNumbersCommon.setEnabled(false);
+            button_defaultNumbersMost.setEnabled(false);
         }
     }//GEN-LAST:event_jcheckBox_useNumbersAtTheEndActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         informationWindow.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
-    
+
+    private void button_defaultNumbersBasicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_defaultNumbersBasicActionPerformed
+        jtextArea_numbersAtTheEnd.setText(defaultNumbersBasic);
+    }//GEN-LAST:event_button_defaultNumbersBasicActionPerformed
+
+    private void button_defaultNumbersCommonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_defaultNumbersCommonActionPerformed
+        jtextArea_numbersAtTheEnd.setText(defaultNumbersCommon);
+    }//GEN-LAST:event_button_defaultNumbersCommonActionPerformed
+
+    private void button_defaultNumbersMostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_defaultNumbersMostActionPerformed
+        jtextArea_numbersAtTheEnd.setText(defaultNumbersMost);
+    }//GEN-LAST:event_button_defaultNumbersMostActionPerformed
+
     public void progressCounterPlusPlus() {
-        int value = jprogressBar_progress.getValue()+1;
+        int value = jprogressBar_progress.getValue() + 1;
         jprogressBar_progress.setValue(value);
-        double progress = (double) value * 100/jprogressBar_progress.getMaximum();
+        double progress = (double) value * 100 / jprogressBar_progress.getMaximum();
         jprogressBar_progress.setString(String.format("%.2f%c", progress, '%'));
     }
-    
-    public void resetProgressBarStatus(){
+
+    public void resetProgressBarStatus() {
         jprogressBar_progress.setValue(0);
         jprogressBar_progress.setString(String.format("%s", "Ready"));
     }
-    
-    public void setProgressBarMaxValue(int number){
+
+    public void setProgressBarMaxValue(int number) {
         jprogressBar_progress.setMaximum(number);
     }
-    
-    public void threadFinished() throws IOException{
+
+    public void threadFinished() throws IOException {
         stopTime = System.currentTimeMillis();
         jprogressBar_progress.setValue(jprogressBar_progress.getMaximum());
         jprogressBar_progress.setString(String.format("%s", "100%"));
-        long time = stopTime-startTime;
+        long time = stopTime - startTime;
         JOptionPane.showMessageDialog(null, "Done in " + time + "ms! " + textField_newOutputName.getText() + " is stored at the same location.");
         jbutton_generate.setEnabled(true);
         bufferedReader.close();
         bufferedWriter.flush();
         bufferedWriter.close();
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton button_defaultNumbersBasic;
+    private javax.swing.JButton button_defaultNumbersCommon;
+    private javax.swing.JButton button_defaultNumbersMost;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbutton_chooseExistingDictionaryPath;
     private javax.swing.JButton jbutton_generate;
-    private javax.swing.JButton jbutton_resetToDefaultNumbers;
     private javax.swing.JCheckBox jcheckBox_convertEndings;
     private javax.swing.JCheckBox jcheckBox_convertLTUtoSimpleLetters;
     private javax.swing.JCheckBox jcheckBox_useCapitalLetters;
@@ -491,5 +530,5 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextArea jtextArea_numbersAtTheEnd;
     private javax.swing.JTextField textField_newOutputName;
     // End of variables declaration//GEN-END:variables
-    
+
 }

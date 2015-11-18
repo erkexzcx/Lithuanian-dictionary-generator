@@ -24,7 +24,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jprogressBar_progress" max="32767" attributes="0"/>
@@ -53,14 +53,16 @@
                           <Component id="textField_newOutputName" max="32767" attributes="0"/>
                       </Group>
                   </Group>
+                  <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jcheckBox_useNumbersAtTheEnd" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jbutton_resetToDefaultNumbers" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" max="32767" attributes="0"/>
+                      <Component id="button_defaultNumbersBasic" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="button_defaultNumbersCommon" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="button_defaultNumbersMost" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -96,17 +98,19 @@
                   <Component id="jButton1" alignment="1" min="-2" pref="45" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jcheckBox_useNumbersAtTheEnd" min="-2" pref="19" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jbutton_resetToDefaultNumbers" max="32767" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="60" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="button_defaultNumbersBasic" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="button_defaultNumbersCommon" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="button_defaultNumbersMost" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jcheckBox_useNumbersAtTheEnd" alignment="3" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="60" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jprogressBar_progress" min="-2" pref="25" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jbutton_generate" min="-2" pref="40" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -139,19 +143,11 @@
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
             <Property name="toolTipText" type="java.lang.String" value="Numbers must be separated by a commas only. No other symbols, just only numbers, commas and spaces!"/>
+            <Property name="wrapStyleWord" type="boolean" value="true"/>
           </Properties>
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jbutton_resetToDefaultNumbers">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Reset to default"/>
-        <Property name="toolTipText" type="java.lang.String" value="Overwrite what was entered to the field by the user to default numbers."/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbutton_resetToDefaultNumbersActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JCheckBox" name="jcheckBox_useNumbersAtTheEnd">
       <Properties>
         <Property name="selected" type="boolean" value="true"/>
@@ -172,14 +168,14 @@
     <Component class="javax.swing.JCheckBox" name="jcheckBox_useCapitalLetters">
       <Properties>
         <Property name="selected" type="boolean" value="true"/>
-        <Property name="text" type="java.lang.String" value="Use capital only at the beginning."/>
+        <Property name="text" type="java.lang.String" value="Starts with UPPERCASE letter"/>
         <Property name="toolTipText" type="java.lang.String" value="If none of these 2 are selected, the beginning letters won&apos;t be changed!"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JCheckBox" name="jcheckBox_useLowercaseLetters">
       <Properties>
         <Property name="selected" type="boolean" value="true"/>
-        <Property name="text" type="java.lang.String" value="Use lowecase only at the beginning."/>
+        <Property name="text" type="java.lang.String" value="Starts with lowercase letter"/>
         <Property name="toolTipText" type="java.lang.String" value="If none of these 2 are selected, the beginning letters won&apos;t be changed!"/>
       </Properties>
     </Component>
@@ -225,6 +221,30 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Output.txt"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="button_defaultNumbersMost">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Most"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_defaultNumbersMostActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="button_defaultNumbersCommon">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Common"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_defaultNumbersCommonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="button_defaultNumbersBasic">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Basic"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_defaultNumbersBasicActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
