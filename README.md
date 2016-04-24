@@ -8,8 +8,8 @@
 - [x] Show progress
 - [x] Show hints
 - [x] Add some help text
-- [ ] Add number 49 as option to generator. I've seen multiple scenarions where I can see this number being used.
-- [ ] Add some credits to me as an author.
+- [x] Add number 49 as option to generator. I've seen multiple scenarions where I can see this number being used.
+- [x] Add some credits to me as an author.
 
 # Usage
 If you get an error while running this, update java!
