@@ -55,17 +55,16 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow mainFrame = this;
 
     private final String appTitle = "Lithuanian words dictionary generator";
-    private final String appVersion = "1.08"; //will be used for releases only
+    private final String appVersion = "1.09"; //will be used for releases only
 
-    // Well, some of the numbers is what my GF told me that her friends use :D
     private final String defaultNumbersMost = "1, 12, 21, 23, 32, 123, 321, 122, "
             + "322, 223, 112, 01, 09, 08, 07, 06, 05, 04, 03, 02, 0, 001, 007, "
             + "10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 91, 92, 93, 94, 95, "
             + "96, 97, 98, 99, 00, 69, 96, 963, 369, 34, 45, 56, 67, 78, 89, 90, "
-            + "98, 87, 76, 65, 54, 43, 951, 159";
+            + "98, 87, 76, 65, 54, 43, 951, 159, 49";
     private final String defaultNumbersCommon = "1, 0, 01, 12, 21, 23, 32, 123, 321, "
             + "122, 322, 223, 112, 911, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 91, "
-            + "92, 93, 94, 95, 96, 97, 98, 99, 00";
+            + "92, 93, 94, 95, 96, 97, 98, 99, 00, 49";
     private final String defaultNumbersBasic = "1, 0, 01, 123, 321, 12, 21, 23, 32";
 
     private File currentDictionaryFile = null;
@@ -107,6 +106,7 @@ public class MainWindow extends javax.swing.JFrame {
         button_defaultNumbersMost = new javax.swing.JButton();
         button_defaultNumbersCommon = new javax.swing.JButton();
         button_defaultNumbersBasic = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -196,6 +196,8 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("Author: Erikas Rudinskas (erikmnkl@gmail.com)");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -203,8 +205,10 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jprogressBar_progress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbutton_generate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jcheckBox_convertLTUtoSimpleLetters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -218,12 +222,11 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbutton_chooseExistingDictionaryPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jbutton_chooseExistingDictionaryPath))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jfield_existingDictionaryPath)
                             .addComponent(textField_newOutputName)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jcheckBox_useNumbersAtTheEnd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -239,9 +242,11 @@ public class MainWindow extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jbutton_chooseExistingDictionaryPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jfield_existingDictionaryPath))
+                    .addComponent(jfield_existingDictionaryPath, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -263,7 +268,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(button_defaultNumbersCommon)
                     .addComponent(button_defaultNumbersMost)
                     .addComponent(jcheckBox_useNumbersAtTheEnd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jprogressBar_progress, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -517,6 +522,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton button_defaultNumbersMost;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbutton_chooseExistingDictionaryPath;
     private javax.swing.JButton jbutton_generate;
