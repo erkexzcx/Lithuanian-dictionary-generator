@@ -1,6 +1,13 @@
 # TODO list
-- [ ] 
-- - [ ] 
+- [x] Choose dictionary with a java file browser.
+- [x] Choose output file name.
+- [x] Convert lithuanian endings (Erikas --> Eriko, Jonas --> Jono, Gabija --> Gabijos).
+- [x] Remove diacritic symbols from used dictionary.
+- [x] Output words starts with uppercase and lowercase words.
+- [x] Allow user to choose his own prefered endings.
+- [x] Show progress
+- [x] Show hints
+- [x] Add some help text
 - [ ] Add number 49 as option to generator. I've seen multiple scenarions where I can see this number being used.
 - [ ] Add some credits to me as an author.
 
