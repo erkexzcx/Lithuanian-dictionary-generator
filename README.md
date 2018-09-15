@@ -1,11 +1,10 @@
 # Dictionary-LT-generator
 
-<img src="http://i67.tinypic.com/53pwsz.png">
-
-## What is it
 This is a tool to generate a dictionary of lithuanian passwords, which can be used for dictionary attacks on lithuanian passwords. You need to have at least one basic dictionary and understanding of what you are trying to achieve. Without basic dictionary, this application is useless and it is your responsibility to get or create it.
 
-__DISCLAIMER__: I take no responsibility for any misuse of this app. It was only created for penetration testing, not for actual hacking.
+__DISCLAIMER__: I take no responsibility for any misuse of this application. It was created only for penetration testing and nothing else.
+
+<img src="http://i63.tinypic.com/20kwraw.png">
 
 ## What does it actually do?
 
@@ -48,21 +47,8 @@ And this is exactly what this app does. You can literally create huge dictionari
 ## How do I use it?
 
 ### Checkboxes
-1. __Starts with uppercase__ - change first letter of each word to UPPERcase
-2. __Starts with lowercase__ - change first letter of each word to lowercase
-3. __Convert endings__ - change given endings for each word (e.g. `erikas` becomes `eriko` etc...)
-4. __Append text__ - append given text after each word (e.g. `erikas` becomes `erikas123` or erikas` becomes `erikas!!!` etc...)
+Hover the mouse over any checkbox to understand what it does. The text next to checkboxes is quite self explanatory and easy to understand.
 
-### Text areas
-1. __Endings textarea__ - these endings must be provided in a form of `change_what=>change_to`. Separated by new line. you should not edit this textarea, unless you find it needed to change some rare endings of some words.
-2. __Append words textarea__ - these must be separated by new line. Mostly used for numbers, but you can append anything you want, like `_bro` or `-admin`. Depends on what you are trying to achieve.
-
-### Remaining 2 checkboxes
-To understand what remaining 2 checkboxes do, you need to understand the way application process words:
-1. step: Convert case of first letter.
-2. step: Change endings of the words.
-3. step: Append text to the end of each word.
-
-So these checkboxes:
-1. __Also include words with original endings__ - If checked, all original words generated from __1. step__ will not be added to output dictionary.
-2. __Also include words without these__ - If checked, all original words generated from __2. step__ will not be added to output dictionary.
+### Textareas
+1. __Endings textarea__ - these endings must be provided in a form of `change_what=>change_to`. Separated by new line. You should not edit this textarea, unless you need to change some very rare endings of some words. P.S. If you find such words - create issue on Github for me to fix this.
+2. __Append words textarea__ - these must be separated by new line. Mostly used for numbers, but you can append anything you want, like `###` or `-admin`. Depends on what you are trying to achieve.
