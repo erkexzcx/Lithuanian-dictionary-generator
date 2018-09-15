@@ -423,8 +423,6 @@ public class MainWindow extends javax.swing.JFrame {
 
         // Create array from append text:
         String appendText[] = jTextArea_appendText.getText().trim().split("\\n");
-        
-        System.out.println("Amount of lines in input file: " + linesCount);
 
         // Create threads pool:
         int processorCount = Runtime.getRuntime().availableProcessors();
