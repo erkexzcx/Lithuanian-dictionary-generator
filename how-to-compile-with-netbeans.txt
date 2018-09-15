@@ -1,4 +1,0 @@
-1. In netbeans, click on "Files" tab to see plain files in the package browser
-2. Expand dictionaryLT generator project
-3. Right click on build.xml --> Run Target --> package-for-store (if you can't find it, then check in "Other target").
-4. Your project will be compiled into a single jar file (with libraries) at ./store/ directory.
