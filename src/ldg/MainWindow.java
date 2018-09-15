@@ -50,34 +50,39 @@ public class MainWindow extends javax.swing.JFrame {
         jTextField_inputDictionaryPath = new javax.swing.JTextField();
         jButton_browseInputDictionary = new javax.swing.JButton();
         jTextField_outputDictionaryPath = new javax.swing.JTextField();
-        jPanel1 = new javax.swing.JPanel();
-        jCheckBox_convertEndings = new javax.swing.JCheckBox();
-        jCheckBox_startsWithUppercase = new javax.swing.JCheckBox();
-        jCheckBox_appendText = new javax.swing.JCheckBox();
-        jCheckBox_startsWithLowercase = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jPanel_endings = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea_endings = new javax.swing.JTextArea();
-        jCheckBox_includeWordsWithOriginalEndings = new javax.swing.JCheckBox();
+        jProgressBar_progressBar = new javax.swing.JProgressBar();
+        jButton_start = new javax.swing.JButton();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        jPanel2 = new javax.swing.JPanel();
         jPanel_appendText = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea_appendText = new javax.swing.JTextArea();
         jCheckBox_includeWordsWithoutAppendedText = new javax.swing.JCheckBox();
-        jProgressBar_progressBar = new javax.swing.JProgressBar();
-        jButton_start = new javax.swing.JButton();
+        jCheckBox_appendText = new javax.swing.JCheckBox();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel_endings = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea_endings = new javax.swing.JTextArea();
+        jCheckBox_includeWordsWithOriginalEndings = new javax.swing.JCheckBox();
+        jCheckBox_convertEndings = new javax.swing.JCheckBox();
+        jPanel1 = new javax.swing.JPanel();
+        jCheckBox_startsWithUppercase = new javax.swing.JCheckBox();
+        jCheckBox_startsWithLowercase = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Lithuanian dictionary generator v2.0");
-        setResizable(false);
+        setMinimumSize(new java.awt.Dimension(650, 600));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 2, 12)); // NOI18N
         jLabel1.setText("Author: Erikas Rudinskas (erikmnkl@gmail.com). Report any issues on github!");
 
         jTextField_inputDictionaryPath.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
+        jTextField_inputDictionaryPath.setToolTipText("Path to input dictionary file");
 
         jButton_browseInputDictionary.setText("Browse");
+        jButton_browseInputDictionary.setToolTipText("Browse for input dictionary file");
         jButton_browseInputDictionary.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_browseInputDictionaryActionPerformed(evt);
@@ -85,108 +90,53 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         jTextField_outputDictionaryPath.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
+        jTextField_outputDictionaryPath.setToolTipText("Path to output dictionary file. Application will insert it for you once you select input dictionary file.");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("User preferences"));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel2.setText("Input dictionary:");
 
-        jCheckBox_convertEndings.setSelected(true);
-        jCheckBox_convertEndings.setText("Convert endings");
-        jCheckBox_convertEndings.addActionListener(new java.awt.event.ActionListener() {
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel3.setText("Output dictionary:");
+
+        jProgressBar_progressBar.setStringPainted(true);
+
+        jButton_start.setText("Generate output dictionary");
+        jButton_start.setToolTipText("Click if you want to start generating output dictionary");
+        jButton_start.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox_convertEndingsActionPerformed(evt);
+                jButton_startActionPerformed(evt);
             }
         });
 
-        jCheckBox_startsWithUppercase.setSelected(true);
-        jCheckBox_startsWithUppercase.setText("Starts with uppercase");
+        jSplitPane1.setBorder(null);
+        jSplitPane1.setDividerLocation(422);
+        jSplitPane1.setDividerSize(0);
+        jSplitPane1.setResizeWeight(0.5);
+        jSplitPane1.setToolTipText("");
+        jSplitPane1.setFocusable(false);
+
+        jPanel_appendText.setBorder(javax.swing.BorderFactory.createTitledBorder("Append text"));
+
+        jTextArea_appendText.setColumns(20);
+        jTextArea_appendText.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
+        jTextArea_appendText.setRows(5);
+        jTextArea_appendText.setText("123\n1\n2017\n2018\n#!\n$$$\n45");
+        jTextArea_appendText.setToolTipText("New line separated.");
+        jScrollPane2.setViewportView(jTextArea_appendText);
+
+        jCheckBox_includeWordsWithoutAppendedText.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jCheckBox_includeWordsWithoutAppendedText.setSelected(true);
+        jCheckBox_includeWordsWithoutAppendedText.setText("Also export words without appended text");
+        jCheckBox_includeWordsWithoutAppendedText.setToolTipText("Words without appended text will not be exported if this is not checked.");
 
         jCheckBox_appendText.setSelected(true);
-        jCheckBox_appendText.setText("Append text");
+        jCheckBox_appendText.setText("Append given text");
+        jCheckBox_appendText.setToolTipText("Check this box if you want to export words with given text appended to the end of each word");
         jCheckBox_appendText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox_appendTextActionPerformed(evt);
             }
         });
-
-        jCheckBox_startsWithLowercase.setSelected(true);
-        jCheckBox_startsWithLowercase.setText("Starts with lowercase");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox_convertEndings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCheckBox_appendText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jCheckBox_startsWithLowercase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCheckBox_startsWithUppercase, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox_convertEndings)
-                    .addComponent(jCheckBox_startsWithUppercase))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox_appendText)
-                    .addComponent(jCheckBox_startsWithLowercase))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Input dictionary:");
-
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Output dictionary:");
-
-        jPanel_endings.setBorder(javax.swing.BorderFactory.createTitledBorder("Endings (new line separated)"));
-
-        jTextArea_endings.setColumns(20);
-        jTextArea_endings.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
-        jTextArea_endings.setRows(5);
-        jTextArea_endings.setText("dis=>dzio\nias=>io\nia=>ios\nis=>io\nas=>o\ntis=>cio\ntys=>cio\ne=>es\na=>os\nsuo=>ers\nmuo=>mens\nus=>aus");
-        jScrollPane1.setViewportView(jTextArea_endings);
-
-        jCheckBox_includeWordsWithOriginalEndings.setSelected(true);
-        jCheckBox_includeWordsWithOriginalEndings.setText("Also include words with original endings?");
-
-        javax.swing.GroupLayout jPanel_endingsLayout = new javax.swing.GroupLayout(jPanel_endings);
-        jPanel_endings.setLayout(jPanel_endingsLayout);
-        jPanel_endingsLayout.setHorizontalGroup(
-            jPanel_endingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_endingsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_endingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox_includeWordsWithOriginalEndings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
-        );
-        jPanel_endingsLayout.setVerticalGroup(
-            jPanel_endingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_endingsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jCheckBox_includeWordsWithOriginalEndings)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jPanel_appendText.setBorder(javax.swing.BorderFactory.createTitledBorder("Append text (new line separated)"));
-
-        jTextArea_appendText.setColumns(20);
-        jTextArea_appendText.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
-        jTextArea_appendText.setRows(5);
-        jTextArea_appendText.setText("123\n1\n10\n100\n45\n1");
-        jScrollPane2.setViewportView(jTextArea_appendText);
-
-        jCheckBox_includeWordsWithoutAppendedText.setSelected(true);
-        jCheckBox_includeWordsWithoutAppendedText.setText("Also include words without these?");
 
         javax.swing.GroupLayout jPanel_appendTextLayout = new javax.swing.GroupLayout(jPanel_appendText);
         jPanel_appendText.setLayout(jPanel_appendTextLayout);
@@ -195,54 +145,156 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(jPanel_appendTextLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_appendTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox_includeWordsWithoutAppendedText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                    .addComponent(jScrollPane2)
+                    .addComponent(jCheckBox_includeWordsWithoutAppendedText, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+                    .addComponent(jCheckBox_appendText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel_appendTextLayout.setVerticalGroup(
             jPanel_appendTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_appendTextLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jCheckBox_appendText)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBox_includeWordsWithoutAppendedText)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jProgressBar_progressBar.setStringPainted(true);
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel_appendText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel_appendText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
-        jButton_start.setText("Start");
-        jButton_start.addActionListener(new java.awt.event.ActionListener() {
+        jSplitPane1.setRightComponent(jPanel2);
+
+        jPanel_endings.setBorder(javax.swing.BorderFactory.createTitledBorder("Endings table"));
+
+        jTextArea_endings.setColumns(20);
+        jTextArea_endings.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
+        jTextArea_endings.setRows(5);
+        jTextArea_endings.setText("dis=>dzio\nias=>io\nia=>ios\nis=>io\nas=>o\ntis=>cio\ntys=>cio\ne=>es\na=>os\nsuo=>ers\nmuo=>mens\nus=>aus");
+        jTextArea_endings.setToolTipText("New line separated. Format is 'from=>to'.");
+        jScrollPane1.setViewportView(jTextArea_endings);
+
+        jCheckBox_includeWordsWithOriginalEndings.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jCheckBox_includeWordsWithOriginalEndings.setSelected(true);
+        jCheckBox_includeWordsWithOriginalEndings.setText("Also export words with original endings");
+        jCheckBox_includeWordsWithOriginalEndings.setToolTipText("Words with original endings will not be exported if this is not checked.");
+
+        jCheckBox_convertEndings.setSelected(true);
+        jCheckBox_convertEndings.setText("Change given endings");
+        jCheckBox_convertEndings.setToolTipText("Check this box if you want to export words with their endings changed as per given 'from=>to' table.");
+        jCheckBox_convertEndings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_startActionPerformed(evt);
+                jCheckBox_convertEndingsActionPerformed(evt);
             }
         });
+
+        javax.swing.GroupLayout jPanel_endingsLayout = new javax.swing.GroupLayout(jPanel_endings);
+        jPanel_endings.setLayout(jPanel_endingsLayout);
+        jPanel_endingsLayout.setHorizontalGroup(
+            jPanel_endingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_endingsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_endingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jCheckBox_convertEndings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jCheckBox_includeWordsWithOriginalEndings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
+                .addContainerGap())
+        );
+        jPanel_endingsLayout.setVerticalGroup(
+            jPanel_endingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_endingsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jCheckBox_convertEndings)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCheckBox_includeWordsWithOriginalEndings)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("First letter case"));
+
+        jCheckBox_startsWithUppercase.setSelected(true);
+        jCheckBox_startsWithUppercase.setText("UPPERcase");
+        jCheckBox_startsWithUppercase.setToolTipText("Check if you want to export words starting with uppercase");
+
+        jCheckBox_startsWithLowercase.setSelected(true);
+        jCheckBox_startsWithLowercase.setText("lowercase");
+        jCheckBox_startsWithLowercase.setToolTipText("Check if you want to export words starting with lowercase");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox_startsWithUppercase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jCheckBox_startsWithLowercase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jCheckBox_startsWithUppercase)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCheckBox_startsWithLowercase)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel_endings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel_endings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jSplitPane1.setLeftComponent(jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
+                    .addComponent(jTextField_outputDictionaryPath)
+                    .addComponent(jButton_start, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jTextField_inputDictionaryPath)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField_inputDictionaryPath)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton_browseInputDictionary))
-                            .addComponent(jTextField_outputDictionaryPath)))
-                    .addComponent(jPanel_endings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel_appendText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jProgressBar_progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton_start, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton_browseInputDictionary))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jProgressBar_progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,21 +302,17 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField_inputDictionaryPath, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton_browseInputDictionary)))
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField_outputDictionaryPath, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField_inputDictionaryPath, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_browseInputDictionary))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel_endings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField_outputDictionaryPath, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel_appendText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSplitPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jProgressBar_progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -517,11 +565,14 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel_appendText;
     private javax.swing.JPanel jPanel_endings;
     private javax.swing.JProgressBar jProgressBar_progressBar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTextArea jTextArea_appendText;
     private javax.swing.JTextArea jTextArea_endings;
     private javax.swing.JTextField jTextField_inputDictionaryPath;
