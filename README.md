@@ -4,7 +4,7 @@ This is a tool to generate a dictionary of lithuanian passwords, which can be us
 
 __DISCLAIMER__: I take no responsibility for any misuse of this application. It was created only for penetration testing and nothing else.
 
-<img src="http://i63.tinypic.com/20kwraw.png">
+<img src="http://i63.tinypic.com/akg9q1.png">
 
 ## What does it actually do?
 
