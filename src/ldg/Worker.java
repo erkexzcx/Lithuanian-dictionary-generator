@@ -3,41 +3,41 @@ package ldg;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Processor implements Runnable {
+public class Worker implements Runnable {
 
-    Manager manager;
-
-    boolean convertEndings;
-    boolean convertEndingsIncludeOriginals;
+    WorkersManager workersManager;
+    boolean changeEndings;
+    boolean changeEndingsExportOriginals;
     boolean appendText;
-    boolean appendTextIncludeOriginals;
-    boolean useLowercase;
-    boolean useUppercase;
-    EndingPair endingPairs[];
+    boolean appendTextExportOriginals;
+    boolean uppercase;
+    boolean lowercase;
+    EndingPair[] endingPairsArray;
     String appendTextArray[];
     boolean updateUi;
 
     List<String> list1 = new ArrayList<>();
     List<String> list2 = new ArrayList<>();
 
-    public Processor(Manager manager,
-            boolean convertEndings,
-            boolean convertEndingsIncludeOriginals,
+    public Worker(
+            WorkersManager workersManager,
+            boolean changeEndings,
+            boolean changeEndingsExportOriginals,
             boolean appendText,
-            boolean appendTextIncludeOriginals,
-            boolean useLowercase,
-            boolean useUppercase,
-            EndingPair endingPairs[],
+            boolean appendTextExportOriginals,
+            boolean uppercase,
+            boolean lowercase,
+            EndingPair endingPairsArray[],
             String[] appendTextArray,
             boolean updateUi) {
-        this.manager = manager;
-        this.convertEndings = convertEndings;
-        this.convertEndingsIncludeOriginals = convertEndingsIncludeOriginals;
+        this.workersManager = workersManager;
+        this.changeEndings = changeEndings;
+        this.changeEndingsExportOriginals = changeEndingsExportOriginals;
         this.appendText = appendText;
-        this.appendTextIncludeOriginals = appendTextIncludeOriginals;
-        this.useLowercase = useLowercase;
-        this.useUppercase = useUppercase;
-        this.endingPairs = endingPairs;
+        this.appendTextExportOriginals = appendTextExportOriginals;
+        this.uppercase = uppercase;
+        this.lowercase = lowercase;
+        this.endingPairsArray = endingPairsArray;
         this.appendTextArray = appendTextArray;
         this.updateUi = updateUi;
     }
@@ -46,34 +46,30 @@ public class Processor implements Runnable {
     public void run() {
         String word;
         String tmp;
-        while ((word = manager.readWord(updateUi)) != null) {
+        while ((word = workersManager.readWord(updateUi)) != null) {
 
             list1.clear();
             list2.clear();
 
             // Populate list1 with words
             //==================================================================
-            if (useUppercase) {
-                list1.add(
-                    new StringBuilder().append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).toString()
-                );
+            if (uppercase) {
+                list1.add( Character.toUpperCase(word.charAt(0)) + word.substring(1) );
             }
-            if (useLowercase) {
-                list1.add(
-                    new StringBuilder().append(Character.toLowerCase(word.charAt(0))).append(word.substring(1)).toString()
-                );
+            if (lowercase) {
+                list1.add( Character.toLowerCase(word.charAt(0)) + word.substring(1) );
             }
-            if (!useUppercase && !useLowercase) {
+            if (!uppercase && !lowercase) {
                 list1.add(word); // neither uppercase neither lowercase, so let's just use original word
             }
             //==================================================================
 
-            // Populate list2 with words generated from list1:
+            // Populate list2 with words from list1:
             //==================================================================
-            if (convertEndings) {
+            if (changeEndings) {
 
                 // Copy list1 words to list2
-                if (convertEndingsIncludeOriginals) {
+                if (changeEndingsExportOriginals) {
                     list1.forEach((wordFromTheList) -> {
                         list2.add(wordFromTheList);
                     });
@@ -84,7 +80,7 @@ public class Processor implements Runnable {
 
                 // Use words from list1 to generate new words to list2
                 list1.forEach((wordFromTheList) -> {
-                    for (EndingPair ep : endingPairs) {
+                    for (EndingPair ep : endingPairsArray) {
                         // Before we check if words ends with X, we then check if word is longer than X:
                         if (wLength > ep.getFromLength()) {
                             // Check if word ends with X:
@@ -106,12 +102,12 @@ public class Processor implements Runnable {
             }
             //==================================================================
 
-            // Populate list2 with words generated from list1:
+            // Populate list2 with words from list1:
             //==================================================================
             if (appendText) {
 
                 // Copy list1 words to list2
-                if (appendTextIncludeOriginals) {
+                if (appendTextExportOriginals) {
                     list1.forEach((wordFromTheList) -> {
                         list2.add(wordFromTheList);
                     });
@@ -134,7 +130,7 @@ public class Processor implements Runnable {
 
             // Write everything from list1 to output file:
             list1.forEach((wordFromTheList) -> {
-                manager.writeWord(wordFromTheList);
+                workersManager.writeWord(wordFromTheList);
             });
 
         }

@@ -35,7 +35,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jButton_start" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jButton_generate" alignment="0" max="32767" attributes="0"/>
                   <Component id="jLabel1" max="32767" attributes="0"/>
                   <Component id="jProgressBar_progressBar" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
@@ -81,7 +81,7 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jProgressBar_progressBar" min="-2" pref="20" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jButton_start" min="-2" pref="25" max="-2" attributes="0"/>
+              <Component id="jButton_generate" min="-2" pref="25" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -138,13 +138,13 @@
         <Property name="stringPainted" type="boolean" value="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton_start">
+    <Component class="javax.swing.JButton" name="jButton_generate">
       <Properties>
         <Property name="text" type="java.lang.String" value="Generate output dictionary"/>
         <Property name="toolTipText" type="java.lang.String" value="Click if you want to start generating output dictionary"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_startActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_generateActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JSplitPane" name="jSplitPane1">
@@ -200,7 +200,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jScrollPane2" max="32767" attributes="0"/>
-                              <Component id="jCheckBox_includeWordsWithoutAppendedText" pref="376" max="32767" attributes="0"/>
+                              <Component id="jCheckBox_exportNotAppendedWords" pref="376" max="32767" attributes="0"/>
                               <Component id="jCheckBox_appendText" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -213,7 +213,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jCheckBox_appendText" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jCheckBox_includeWordsWithoutAppendedText" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox_exportNotAppendedWords" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jScrollPane2" pref="267" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -242,7 +242,7 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JCheckBox" name="jCheckBox_includeWordsWithoutAppendedText">
+                <Component class="javax.swing.JCheckBox" name="jCheckBox_exportNotAppendedWords">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Dialog" size="12" style="0"/>
@@ -312,8 +312,8 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jCheckBox_convertEndings" max="32767" attributes="0"/>
-                              <Component id="jCheckBox_includeWordsWithOriginalEndings" max="32767" attributes="0"/>
+                              <Component id="jCheckBox_endings" max="32767" attributes="0"/>
+                              <Component id="jCheckBox_exportWordsWithOriginalEndings" max="32767" attributes="0"/>
                               <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -324,9 +324,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jCheckBox_convertEndings" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox_endings" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jCheckBox_includeWordsWithOriginalEndings" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox_exportWordsWithOriginalEndings" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jScrollPane1" pref="173" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -355,7 +355,7 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JCheckBox" name="jCheckBox_includeWordsWithOriginalEndings">
+                <Component class="javax.swing.JCheckBox" name="jCheckBox_exportWordsWithOriginalEndings">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Dialog" size="12" style="0"/>
@@ -365,14 +365,14 @@
                     <Property name="toolTipText" type="java.lang.String" value="Words with original endings will not be exported if this is not checked."/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JCheckBox" name="jCheckBox_convertEndings">
+                <Component class="javax.swing.JCheckBox" name="jCheckBox_endings">
                   <Properties>
                     <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Change given endings"/>
                     <Property name="toolTipText" type="java.lang.String" value="Check this box if you want to export words with their endings changed as per given &apos;from=&gt;to&apos; table."/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox_convertEndingsActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox_endingsActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
@@ -392,8 +392,8 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jCheckBox_startsWithUppercase" max="32767" attributes="0"/>
-                              <Component id="jCheckBox_startsWithLowercase" max="32767" attributes="0"/>
+                              <Component id="jCheckBox_uppercase" max="32767" attributes="0"/>
+                              <Component id="jCheckBox_lowercase" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -403,23 +403,23 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jCheckBox_startsWithUppercase" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox_uppercase" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jCheckBox_startsWithLowercase" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox_lowercase" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JCheckBox" name="jCheckBox_startsWithUppercase">
+                <Component class="javax.swing.JCheckBox" name="jCheckBox_uppercase">
                   <Properties>
                     <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="UPPERcase"/>
                     <Property name="toolTipText" type="java.lang.String" value="Check if you want to export words starting with uppercase"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JCheckBox" name="jCheckBox_startsWithLowercase">
+                <Component class="javax.swing.JCheckBox" name="jCheckBox_lowercase">
                   <Properties>
                     <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="lowercase"/>

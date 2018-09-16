@@ -13,10 +13,11 @@ import java.util.logging.Logger;
 import javax.swing.JProgressBar;
 
 /*
-Manager is like a man in the middle between MainWindow interface and threads.
-Thread takes words from Manager while manager itself also updates progress bar.
+WorkerManager is like a man in the middle between MainWindow and Worker.
+Worker takes words from WorkerManager and submits words to WorkerManager while
+WorkerManager also updates progress bar.
  */
-public class Manager {
+public class WorkersManager {
 
     private final javax.swing.JProgressBar progressBar;
     private final double linesCount;
@@ -28,7 +29,7 @@ public class Manager {
     private final BufferedReader bufferedReader;
     private final BufferedWriter bufferedWriter;
 
-    public Manager(JProgressBar progressBar, double linesCount, File inputFile, File outputFile) throws FileNotFoundException {
+    public WorkersManager(JProgressBar progressBar, double linesCount, File inputFile, File outputFile) throws FileNotFoundException {
         this.progressBar = progressBar;
         this.linesCount = linesCount;
         this.inputFile = inputFile;
@@ -59,7 +60,7 @@ public class Manager {
         try {
             return bufferedReader.readLine();
         } catch (IOException ex) {
-            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(WorkersManager.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(1);
         }
         return null;
@@ -76,7 +77,7 @@ public class Manager {
             bufferedWriter.newLine();
             //bufferedWriter.flush(); // Not needed. Buffer will automatically flush (saves contents to disk) when fills up.
         } catch (IOException ex) {
-            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(WorkersManager.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(1);
         }
     }
