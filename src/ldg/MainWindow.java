@@ -434,6 +434,9 @@ public class MainWindow extends javax.swing.JFrame {
         // Create threads pool:
         int processorCount = Runtime.getRuntime().availableProcessors();
         ExecutorService executor = Executors.newFixedThreadPool(processorCount);
+        
+        // Set timer:
+        long lStartTime = System.nanoTime();
 
         // Submit tasks to thread pool:
         for (int i = 0; i < processorCount; i++) {
@@ -457,6 +460,10 @@ public class MainWindow extends javax.swing.JFrame {
         } catch (InterruptedException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        long lEndTime = System.nanoTime();
+        long output = lEndTime - lStartTime;
+        showPopup("Finished in " + (output / 1000000) + " miliseconds!", "Completed!", JOptionPane.INFORMATION_MESSAGE);
 
         jProgressBar_progressBar.setValue(0);
         jProgressBar_progressBar.setString("Completed!");

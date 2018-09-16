@@ -18,6 +18,7 @@ public class Worker implements Runnable {
 
     List<String> list1 = new ArrayList<>();
     List<String> list2 = new ArrayList<>();
+    List<String> tmpList = new ArrayList<>();
 
     public Worker(
             WorkersManager workersManager,
@@ -50,14 +51,15 @@ public class Worker implements Runnable {
 
             list1.clear();
             list2.clear();
+            tmpList.clear();
 
             // Populate list1 with words
             //==================================================================
             if (uppercase) {
-                list1.add( Character.toUpperCase(word.charAt(0)) + word.substring(1) );
+                list1.add(Character.toUpperCase(word.charAt(0)) + word.substring(1));
             }
             if (lowercase) {
-                list1.add( Character.toLowerCase(word.charAt(0)) + word.substring(1) );
+                list1.add(Character.toLowerCase(word.charAt(0)) + word.substring(1));
             }
             if (!uppercase && !lowercase) {
                 list1.add(word); // neither uppercase neither lowercase, so let's just use original word
@@ -96,8 +98,9 @@ public class Worker implements Runnable {
 
                 // Move everything from list1 and list2:
                 list1.clear();
+                tmpList = list1;
                 list1 = list2;
-                list2 = new ArrayList<>();
+                list2 = tmpList;
 
             }
             //==================================================================
@@ -122,8 +125,9 @@ public class Worker implements Runnable {
 
                 // Switch list1 and list2:
                 list1.clear();
+                tmpList = list1;
                 list1 = list2;
-                list2 = new ArrayList<>();
+                list2 = tmpList;
 
             }
             //==================================================================
@@ -138,6 +142,7 @@ public class Worker implements Runnable {
         // Clear lists at the end:
         list1.clear();
         list2.clear();
+        tmpList.clear();
     }
 
 }

@@ -54,7 +54,7 @@ public class WorkersManager {
         if (updateUi) {
             double res = (progressCounter * 100) / linesCount;
             progressBar.setValue((int) res);
-            progressBar.setString(String.format("%.2f%%", res));
+            progressBar.setString(String.format("%.2f%%", (res > 100 ? 100.0 : res)));
         }
 
         try {
