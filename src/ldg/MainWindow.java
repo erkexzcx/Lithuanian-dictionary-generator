@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -59,7 +61,7 @@ public class MainWindow extends javax.swing.JFrame {
         jCheckBox_lowercase = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Lithuanian dictionary generator v2.03");
+        setTitle("Lithuanian dictionary generator v2.04");
         setMinimumSize(new java.awt.Dimension(650, 600));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 2, 12)); // NOI18N
@@ -433,16 +435,18 @@ public class MainWindow extends javax.swing.JFrame {
 
         // Create array from append text:
         String appendTextArray[] = appendTextRawText.split("\\n");
+        
+        // Get cores count:
+        int coresCount = (Runtime.getRuntime().availableProcessors() * 2);
 
         // Create threads pool:
-        int processorCount = Runtime.getRuntime().availableProcessors();
-        ExecutorService executor = Executors.newFixedThreadPool(processorCount);
+        ExecutorService executor = Executors.newFixedThreadPool(coresCount);
         
         // Set timer:
         long lStartTime = System.nanoTime();
 
         // Submit tasks to thread pool:
-        for (int i = 0; i < processorCount; i++) {
+        for (int i = 0; i < coresCount; i++) {
             executor.submit(new Worker(
                     workersManager,
                     changeEndings,
@@ -463,7 +467,7 @@ public class MainWindow extends javax.swing.JFrame {
         } catch (InterruptedException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         long lEndTime = System.nanoTime();
         long output = lEndTime - lStartTime;
         showPopup("Finished in " + (output / 1000000) + " miliseconds!", "Completed!", JOptionPane.INFORMATION_MESSAGE);

@@ -47,89 +47,143 @@ public class Worker implements Runnable {
     public void run() {
         String word;
         String tmp;
+        boolean changeAndAppend = (changeEndings && appendText);
+        boolean lowercaseAndUppercase = (uppercase && lowercase);
         while ((word = workersManager.readWord(updateUi)) != null) {
 
+            /**
+             * *************************************************
+             */
+            /* Looks ugly, but this is the fastest way to do it */
+            /**
+             * *************************************************
+             */
             list1.clear();
             list2.clear();
-            //tmpList.clear(); // Not needed, since it is never used to manipulate data. Only for switching lists.
 
-            // Populate list1 with words
-            //==================================================================
-            if (!uppercase && !lowercase) {
-                list1.add(word); // neither uppercase neither lowercase, so let's just use original word
+            if (lowercaseAndUppercase) {
+                // lowercase and uppercase:
+
+                String firstLetter = word.substring(0, 1);
+                list1.add((firstLetter.toUpperCase()).concat(word.substring(1)));
+                list1.add((firstLetter.toLowerCase()).concat(word.substring(1)));
+
+            } else if (uppercase) {
+                // uppercase only:
+
+                list1.add((word.substring(0, 1).toUpperCase()).concat(word.substring(1)));
+
+            } else if (lowercase) {
+                // lowercase only:
+
+                list1.add((word.substring(0, 1).toLowerCase()).concat(word.substring(1)));
+
             } else {
-                if (uppercase) {
-                    list1.add((word.substring(0, 1).toUpperCase()).concat(word.substring(1)));
-                }
-                if (lowercase) {
-                    list1.add((word.substring(0, 1).toLowerCase()).concat(word.substring(1)));
-                }
+                // Do not change first letter case:
+
+                list1.add(word);
+
             }
-            //==================================================================
 
-            // Populate list2 with words from list1:
-            //==================================================================
-            if (changeEndings) {
+            // list1 now contains the required words - all the same length.
+            if (changeAndAppend) {
+                //##############################################################
+                //*** Change + append ***//
 
-                // Copy list1 words to list2
                 if (changeEndingsExportOriginals) {
+                    // Put words from list1 to list2
                     list1.forEach((wordFromTheList) -> {
                         list2.add(wordFromTheList);
                     });
                 }
 
-                // What's cool about list1 at this stage? All words in it have equal length!
-                int wLength = list1.get(0).length();
+                // Currently all words in list1 are equal length:
+                int wordLength = list1.get(0).length();
 
-                // Use words from list1 to generate new words to list2
+                // Change endings and add them to list2:
                 list1.forEach((wordFromTheList) -> {
                     for (EndingPair ep : endingPairsArray) {
-                        // Before we check if words ends with X, we then check if word is longer than X:
-                        if (wLength > ep.getFromLength()) {
-                            // Check if word ends with X:
-                            if (wordFromTheList.endsWith(ep.getFrom())) {
-                                // Change ending and add to list1
-                                list2.add(
-                                        (wordFromTheList.substring(0, wLength - ep.getFromLength())).concat(ep.getTo())
-                                );
-                            }
+                        // If word ends with X
+                        if (wordFromTheList.endsWith(ep.getFrom())) {
+                            // Change ending with X
+                            list2.add(
+                                    (wordFromTheList.substring(0, wordLength - ep.getFromLength())).concat(ep.getTo())
+                            );
+                            break; // Go to the next word in the list1.
                         }
                     }
                 });
 
-                // Move everything from list1 and list2:
+                // Clear list1 and move everything from list2 to list1:
                 list1.clear();
                 tmpList = list1;
                 list1 = list2;
                 list2 = tmpList;
 
-            }
-            //==================================================================
-
-            // Populate list2 with words from list1:
-            //
-            // Because this is a last step - optimise it a bit by directly writting
-            // to a file instead of a list2.
-            //==================================================================
-            if (appendText) {
-
-                // Copy list1 words to list2
                 if (appendTextExportOriginals) {
                     writeToFile(list1);
                 }
 
-                // Use words from list1 and write them directly to file.
                 list1.forEach((wordFromTheList) -> {
                     for (String a : appendTextArray) {
-                        writeToFile(wordFromTheList.concat(a));
+                        workersManager.writeWord(
+                                wordFromTheList.concat(a)
+                        );
                     }
                 });
 
+                //##############################################################
+            } else if (!changeEndings && appendText) {
+                //##############################################################
+                //*** Append only ***//
+
+                if (appendTextExportOriginals) {
+                    writeToFile(list1);
+                }
+
+                list1.forEach((wordFromTheList) -> {
+                    for (String a : appendTextArray) {
+                        workersManager.writeWord(
+                                wordFromTheList.concat(a)
+                        );
+                    }
+                });
+
+                //##############################################################
+            } else if (changeEndings && !appendText) {
+                //##############################################################
+                //*** Change only ***//
+
+                if (changeEndingsExportOriginals) {
+                    writeToFile(list1);
+                }
+
+                // Currently all words in list1 are equal length
+                int wordLength = list1.get(0).length();
+
+                // Change endings and write them to file:
+                list1.forEach((wordFromTheList) -> {
+                    for (EndingPair ep : endingPairsArray) {
+                        // If word ends with X
+                        if (wordFromTheList.endsWith(ep.getFrom())) {
+                            // Change ending with X
+                            workersManager.writeWord(
+                                    (wordFromTheList.substring(0, wordLength - ep.getFromLength())).concat(ep.getTo())
+                            );
+                            break; // Go to the next word in the list1.
+                        }
+                    }
+                });
+
+                //##############################################################
             } else {
-                // User does not want to append words - write everything form list1 to file:
+                //##############################################################
+                //*** Nothing ***//
+
                 writeToFile(list1);
+
+                //##############################################################
             }
-            //==================================================================
 
         }
 
@@ -143,10 +197,6 @@ public class Worker implements Runnable {
         list1.forEach((wordFromTheList) -> {
             workersManager.writeWord(wordFromTheList);
         });
-    }
-
-    private void writeToFile(String word) {
-        workersManager.writeWord(word);
     }
 
 }
