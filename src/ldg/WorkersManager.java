@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.logging.Level;
@@ -29,7 +30,7 @@ public class WorkersManager {
     private final BufferedReader bufferedReader;
     private final BufferedWriter bufferedWriter;
 
-    public WorkersManager(JProgressBar progressBar, double linesCount, File inputFile, File outputFile) throws FileNotFoundException {
+    public WorkersManager(JProgressBar progressBar, double linesCount, File inputFile, File outputFile) throws FileNotFoundException, IOException {
         this.progressBar = progressBar;
         this.linesCount = linesCount;
         this.inputFile = inputFile;
@@ -39,7 +40,7 @@ public class WorkersManager {
         bufferedReader = new BufferedReader(new FileReader(inputFile));
 
         // Open output file for writting:
-        bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile)));
+        bufferedWriter = new BufferedWriter(new FileWriter(outputFile));
 
     }
 

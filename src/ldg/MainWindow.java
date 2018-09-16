@@ -418,6 +418,9 @@ public class MainWindow extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(1); // Just exit. It shouldn't happen at all
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            System.exit(1);
         }
 
         // Create array from word endings:

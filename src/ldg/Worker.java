@@ -51,18 +51,19 @@ public class Worker implements Runnable {
 
             list1.clear();
             list2.clear();
-            tmpList.clear();
+            //tmpList.clear(); // Not needed, since it is never used to manipulate data. Only for switching lists.
 
             // Populate list1 with words
             //==================================================================
-            if (uppercase) {
-                list1.add(Character.toUpperCase(word.charAt(0)) + word.substring(1));
-            }
-            if (lowercase) {
-                list1.add(Character.toLowerCase(word.charAt(0)) + word.substring(1));
-            }
             if (!uppercase && !lowercase) {
                 list1.add(word); // neither uppercase neither lowercase, so let's just use original word
+            } else {
+                if (uppercase) {
+                    list1.add((word.substring(0, 1).toUpperCase()).concat(word.substring(1)));
+                }
+                if (lowercase) {
+                    list1.add((word.substring(0, 1).toLowerCase()).concat(word.substring(1)));
+                }
             }
             //==================================================================
 
@@ -106,36 +107,33 @@ public class Worker implements Runnable {
             //==================================================================
 
             // Populate list2 with words from list1:
+            //
+            // Because this is a last step - optimise it a bit by directly writting
+            // to a file instead of a list
             //==================================================================
             if (appendText) {
 
                 // Copy list1 words to list2
                 if (appendTextExportOriginals) {
                     list1.forEach((wordFromTheList) -> {
-                        list2.add(wordFromTheList);
+                        workersManager.writeWord(wordFromTheList);
                     });
                 }
 
                 // Use words from list1 to generate new words to list2
                 list1.forEach((wordFromTheList) -> {
                     for (String a : appendTextArray) {
-                        list2.add(wordFromTheList + a);
+                        workersManager.writeWord(wordFromTheList + a);
                     }
                 });
 
-                // Switch list1 and list2:
-                list1.clear();
-                tmpList = list1;
-                list1 = list2;
-                list2 = tmpList;
-
+            } else {
+                // Write everything from list1 to output file:
+                list1.forEach((wordFromTheList) -> {
+                    workersManager.writeWord(wordFromTheList);
+                });
             }
             //==================================================================
-
-            // Write everything from list1 to output file:
-            list1.forEach((wordFromTheList) -> {
-                workersManager.writeWord(wordFromTheList);
-            });
 
         }
 
