@@ -90,7 +90,7 @@ public class Worker implements Runnable {
                             if (wordFromTheList.endsWith(ep.getFrom())) {
                                 // Change ending and add to list1
                                 list2.add(
-                                        wordFromTheList.substring(0, wLength - ep.getFromLength()) + ep.getTo()
+                                        (wordFromTheList.substring(0, wLength - ep.getFromLength())).concat(ep.getTo())
                                 );
                             }
                         }
@@ -109,29 +109,25 @@ public class Worker implements Runnable {
             // Populate list2 with words from list1:
             //
             // Because this is a last step - optimise it a bit by directly writting
-            // to a file instead of a list
+            // to a file instead of a list2.
             //==================================================================
             if (appendText) {
 
                 // Copy list1 words to list2
                 if (appendTextExportOriginals) {
-                    list1.forEach((wordFromTheList) -> {
-                        workersManager.writeWord(wordFromTheList);
-                    });
+                    writeToFile(list1);
                 }
 
-                // Use words from list1 to generate new words to list2
+                // Use words from list1 and write them directly to file.
                 list1.forEach((wordFromTheList) -> {
                     for (String a : appendTextArray) {
-                        workersManager.writeWord(wordFromTheList + a);
+                        writeToFile(wordFromTheList.concat(a));
                     }
                 });
 
             } else {
-                // Write everything from list1 to output file:
-                list1.forEach((wordFromTheList) -> {
-                    workersManager.writeWord(wordFromTheList);
-                });
+                // User does not want to append words - write everything form list1 to file:
+                writeToFile(list1);
             }
             //==================================================================
 
@@ -141,6 +137,16 @@ public class Worker implements Runnable {
         list1.clear();
         list2.clear();
         tmpList.clear();
+    }
+
+    private void writeToFile(List<String> list) {
+        list1.forEach((wordFromTheList) -> {
+            workersManager.writeWord(wordFromTheList);
+        });
+    }
+
+    private void writeToFile(String word) {
+        workersManager.writeWord(word);
     }
 
 }
