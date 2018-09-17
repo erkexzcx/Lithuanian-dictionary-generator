@@ -16,9 +16,8 @@ public class Worker implements Runnable {
     String appendTextArray[];
     boolean updateUi;
 
-    List<String> list1 = new ArrayList<>();
-    List<String> list2 = new ArrayList<>();
-    List<String> tmpList = new ArrayList<>();
+    List<String> list1 = new ArrayList<>(); // Primary list
+    List<String> list2 = new ArrayList<>(); // Secondary list
 
     public Worker(
             WorkersManager workersManager,
@@ -47,49 +46,35 @@ public class Worker implements Runnable {
     public void run() {
         String word;
         String tmp;
+
         boolean changeAndAppend = (changeEndings && appendText);
         boolean lowercaseAndUppercase = (uppercase && lowercase);
+
         while ((word = workersManager.readWord(updateUi)) != null) {
 
-            /**
-             * *************************************************
-             */
-            /* Looks ugly, but this is the fastest way to do it */
-            /**
-             * *************************************************
-             */
-            list1.clear();
-            list2.clear();
-
+            // Change case of first letter as per user request and put it into list1:
             if (lowercaseAndUppercase) {
                 // lowercase and uppercase:
-
                 String firstLetter = word.substring(0, 1);
                 list1.add((firstLetter.toUpperCase()).concat(word.substring(1)));
                 list1.add((firstLetter.toLowerCase()).concat(word.substring(1)));
-
             } else if (uppercase) {
                 // uppercase only:
-
                 list1.add((word.substring(0, 1).toUpperCase()).concat(word.substring(1)));
-
             } else if (lowercase) {
                 // lowercase only:
-
                 list1.add((word.substring(0, 1).toLowerCase()).concat(word.substring(1)));
-
             } else {
                 // Do not change first letter case:
-
                 list1.add(word);
-
             }
 
-            // list1 now contains the required words - all the same length.
+            // list1 now contains the required words - all the same length:
             if (changeAndAppend) {
                 //##############################################################
                 //*** Change + append ***//
 
+                // 'Change endings' part starts here:
                 if (changeEndingsExportOriginals) {
                     // Put words from list1 to list2
                     list1.forEach((wordFromTheList) -> {
@@ -114,23 +99,19 @@ public class Worker implements Runnable {
                     }
                 });
 
-                // Clear list1 and move everything from list2 to list1:
-                list1.clear();
-                tmpList = list1;
-                list1 = list2;
-                list2 = tmpList;
-
+                // 'Append text' part starts here:
                 if (appendTextExportOriginals) {
-                    writeToFile(list1);
+                    writeToFile(list2);
                 }
 
-                list1.forEach((wordFromTheList) -> {
+                list2.forEach((wordFromTheList) -> {
                     for (String a : appendTextArray) {
-                        workersManager.writeWord(
-                                wordFromTheList.concat(a)
-                        );
+                        workersManager.writeWord(wordFromTheList.concat(a));
                     }
                 });
+
+                // Because we used list2 - clear it:
+                list2.clear();
 
                 //##############################################################
             } else if (!changeEndings && appendText) {
@@ -143,9 +124,7 @@ public class Worker implements Runnable {
 
                 list1.forEach((wordFromTheList) -> {
                     for (String a : appendTextArray) {
-                        workersManager.writeWord(
-                                wordFromTheList.concat(a)
-                        );
+                        workersManager.writeWord(wordFromTheList.concat(a));
                     }
                 });
 
@@ -185,12 +164,11 @@ public class Worker implements Runnable {
                 //##############################################################
             }
 
+            // Always clear list1 after using it:
+            list1.clear();
+
         }
 
-        // Clear lists at the end:
-        list1.clear();
-        list2.clear();
-        tmpList.clear();
     }
 
     private void writeToFile(List<String> list) {
