@@ -19,6 +19,8 @@ public class Worker implements Runnable {
     List<String> list1 = new ArrayList<>(); // Primary list
     List<String> list2 = new ArrayList<>(); // Secondary list
 
+    StringBuilder sb = new StringBuilder();
+
     public Worker(
             WorkersManager workersManager,
             boolean changeEndings,
@@ -101,12 +103,12 @@ public class Worker implements Runnable {
 
                 // 'Append text' part starts here:
                 if (appendTextExportOriginals) {
-                    writeToFile(list2);
+                    writeToSB(list2);
                 }
 
                 list2.forEach((wordFromTheList) -> {
                     for (String a : appendTextArray) {
-                        workersManager.writeWord(wordFromTheList.concat(a));
+                        writeToSB(wordFromTheList.concat(a));
                     }
                 });
 
@@ -119,12 +121,12 @@ public class Worker implements Runnable {
                 //*** Append only ***//
 
                 if (appendTextExportOriginals) {
-                    writeToFile(list1);
+                    writeToSB(list1);
                 }
 
                 list1.forEach((wordFromTheList) -> {
                     for (String a : appendTextArray) {
-                        workersManager.writeWord(wordFromTheList.concat(a));
+                        writeToSB(wordFromTheList.concat(a));
                     }
                 });
 
@@ -134,7 +136,7 @@ public class Worker implements Runnable {
                 //*** Change only ***//
 
                 if (changeEndingsExportOriginals) {
-                    writeToFile(list1);
+                    writeToSB(list1);
                 }
 
                 // Currently all words in list1 are equal length
@@ -146,7 +148,7 @@ public class Worker implements Runnable {
                         // If word ends with X
                         if (wordFromTheList.endsWith(ep.getFrom())) {
                             // Change ending with X
-                            workersManager.writeWord(
+                            writeToSB(
                                     (wordFromTheList.substring(0, wordLength - ep.getFromLength())).concat(ep.getTo())
                             );
                             break; // Go to the next word in the list1.
@@ -159,10 +161,13 @@ public class Worker implements Runnable {
                 //##############################################################
                 //*** Nothing ***//
 
-                writeToFile(list1);
+                writeToSB(list1);
 
                 //##############################################################
             }
+
+            // Write sb contents to file:
+            flushSB();
 
             // Always clear list1 after using it:
             list1.clear();
@@ -171,10 +176,27 @@ public class Worker implements Runnable {
 
     }
 
-    private void writeToFile(List<String> list) {
-        list1.forEach((wordFromTheList) -> {
-            workersManager.writeWord(wordFromTheList);
+    private void writeToSB(List<String> list) {
+        list.forEach((wordFromTheList) -> {
+            sb.append('\n').append(wordFromTheList);
         });
+    }
+
+    private void writeToSB(String word) {
+        sb.append('\n').append(word);
+    }
+    
+    /**
+     * Writes StringBuilder 'sb' object to file + resets it.
+     * Never write any new line after the string!
+     */
+    private void flushSB() {
+        // Delete first character, which is new line:
+        sb.deleteCharAt(0);
+        // Write to file:
+        workersManager.writeWord(sb.toString());
+        // Also reset it:
+        sb.setLength(0);
     }
 
 }
