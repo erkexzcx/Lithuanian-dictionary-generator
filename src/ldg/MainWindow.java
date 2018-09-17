@@ -118,7 +118,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jCheckBox_appendText.setSelected(true);
         jCheckBox_appendText.setText("Append given text");
-        jCheckBox_appendText.setToolTipText("Check this box if you want to export words with given text appended to the end of each word");
+        jCheckBox_appendText.setToolTipText("Check this box if you want to export words with appended text entries from below textarea.");
         jCheckBox_appendText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox_appendTextActionPerformed(evt);
@@ -164,7 +164,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jSplitPane1.setRightComponent(jPanel2);
 
-        jPanel_endings.setBorder(javax.swing.BorderFactory.createTitledBorder("Endings table"));
+        jPanel_endings.setBorder(javax.swing.BorderFactory.createTitledBorder("Replace endings"));
 
         jTextArea_endings.setColumns(20);
         jTextArea_endings.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
@@ -179,8 +179,8 @@ public class MainWindow extends javax.swing.JFrame {
         jCheckBox_exportWordsWithOriginalEndings.setToolTipText("Words with original endings will not be exported if this is not checked.");
 
         jCheckBox_endings.setSelected(true);
-        jCheckBox_endings.setText("Change given endings");
-        jCheckBox_endings.setToolTipText("Check this box if you want to export words with their endings changed as per given 'from=>to' table.");
+        jCheckBox_endings.setText("Replace given endings");
+        jCheckBox_endings.setToolTipText("Check this box if you want to export words with their endings replaced as per 'from=>to' entries in below textarea.");
         jCheckBox_endings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox_endingsActionPerformed(evt);

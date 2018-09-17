@@ -256,7 +256,7 @@
                   <Properties>
                     <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Append given text"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Check this box if you want to export words with given text appended to the end of each word"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Check this box if you want to export words with appended text entries from below textarea."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox_appendTextActionPerformed"/>
@@ -301,7 +301,7 @@
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                    <TitledBorder title="Endings table"/>
+                    <TitledBorder title="Replace endings"/>
                   </Border>
                 </Property>
               </Properties>
@@ -368,8 +368,8 @@
                 <Component class="javax.swing.JCheckBox" name="jCheckBox_endings">
                   <Properties>
                     <Property name="selected" type="boolean" value="true"/>
-                    <Property name="text" type="java.lang.String" value="Change given endings"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Check this box if you want to export words with their endings changed as per given &apos;from=&gt;to&apos; table."/>
+                    <Property name="text" type="java.lang.String" value="Replace given endings"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Check this box if you want to export words with their endings replaced as per &apos;from=&gt;to&apos; entries in below textarea."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox_endingsActionPerformed"/>
