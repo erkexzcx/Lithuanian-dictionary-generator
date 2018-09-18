@@ -86,7 +86,7 @@ public class Worker implements Runnable {
                 }
 
                 // Currently all words in list1 are equal length:
-                int wordLength = list1.get(0).length();
+                int wordLength = word.length();
 
                 // Change endings and add them to list2:
                 list1.forEach((wordFromTheList) -> {
