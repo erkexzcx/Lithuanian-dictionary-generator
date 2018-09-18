@@ -19,7 +19,7 @@ public class Worker implements Runnable {
     List<String> list1 = new ArrayList<>(); // Primary list
     List<String> list2 = new ArrayList<>(); // Secondary list
 
-    StringBuilder sb = new StringBuilder();
+    StringBuilder sb = new StringBuilder(); // Build string here before writting it to file
 
     public Worker(
             WorkersManager workersManager,
