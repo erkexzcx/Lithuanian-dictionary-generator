@@ -435,7 +435,7 @@ public class MainWindow extends javax.swing.JFrame {
         String appendTextArray[] = appendTextRawText.split("\\n");
         
         // Get cores count:
-        int coresCount = (Runtime.getRuntime().availableProcessors() * 2);
+        int coresCount = Runtime.getRuntime().availableProcessors();
 
         // Create threads pool:
         ExecutorService executor = Executors.newFixedThreadPool(coresCount);
