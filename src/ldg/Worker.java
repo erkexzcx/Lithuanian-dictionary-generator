@@ -57,9 +57,10 @@ public class Worker implements Runnable {
             // Change case of first letter as per user request and put it into list1:
             if (lowercaseAndUppercase) {
                 // lowercase and uppercase:
-                String firstLetter = word.substring(0, 1);
-                list1.add((firstLetter.toUpperCase()).concat(word.substring(1)));
-                list1.add((firstLetter.toLowerCase()).concat(word.substring(1)));
+                String theFirst = word.substring(0, 1);
+                String theRest = word.substring(1);
+                list1.add((theFirst.toUpperCase()).concat(theRest));
+                list1.add((theFirst.toLowerCase()).concat(theRest));
             } else if (uppercase) {
                 // uppercase only:
                 list1.add((word.substring(0, 1).toUpperCase()).concat(word.substring(1)));
@@ -178,21 +179,18 @@ public class Worker implements Runnable {
 
     private void writeToSB(List<String> list) {
         list.forEach((wordFromTheList) -> {
-            sb.append('\n').append(wordFromTheList);
+            sb.append(wordFromTheList).append('\n');
         });
     }
 
     private void writeToSB(String word) {
-        sb.append('\n').append(word);
+        sb.append(word).append('\n');
     }
-    
+
     /**
      * Writes StringBuilder 'sb' object to file + resets it.
-     * Never write any new line after the string!
      */
     private void flushSB() {
-        // Delete first character, which is new line:
-        sb.deleteCharAt(0);
         // Write to file:
         workersManager.writeWord(sb.toString());
         // Also reset it:

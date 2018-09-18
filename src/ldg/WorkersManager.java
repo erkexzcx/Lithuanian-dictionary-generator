@@ -74,7 +74,6 @@ public class WorkersManager {
     public synchronized void writeWord(String word) {
         try {
             bufferedWriter.write(word);
-            bufferedWriter.newLine();
             //bufferedWriter.flush(); // Not needed. Buffer will automatically flush (saves contents to disk) when fills up.
         } catch (IOException ex) {
             Logger.getLogger(WorkersManager.class.getName()).log(Level.SEVERE, null, ex);
