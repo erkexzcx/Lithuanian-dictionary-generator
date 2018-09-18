@@ -109,7 +109,8 @@ public class Worker implements Runnable {
 
                 list2.forEach((wordFromTheList) -> {
                     for (String a : appendTextArray) {
-                        writeToSB(wordFromTheList.concat(a));
+                        writeToSBRaw(wordFromTheList);
+                        writeToSB(a);
                     }
                 });
 
@@ -127,7 +128,8 @@ public class Worker implements Runnable {
 
                 list1.forEach((wordFromTheList) -> {
                     for (String a : appendTextArray) {
-                        writeToSB(wordFromTheList.concat(a));
+                        writeToSBRaw(wordFromTheList);
+                        writeToSB(a);
                     }
                 });
 
@@ -149,9 +151,8 @@ public class Worker implements Runnable {
                         // If word ends with X
                         if (wordFromTheList.endsWith(ep.getFrom())) {
                             // Change ending with X
-                            writeToSB(
-                                    (wordFromTheList.substring(0, wordLength - ep.getFromLength())).concat(ep.getTo())
-                            );
+                            writeToSBRaw(wordFromTheList.substring(0, wordLength - ep.getFromLength()));
+                            writeToSB(ep.getTo());
                             break; // Go to the next word in the list1.
                         }
                     }
@@ -185,6 +186,10 @@ public class Worker implements Runnable {
 
     private void writeToSB(String word) {
         sb.append(word).append('\n');
+    }
+
+    private void writeToSBRaw(String word) {
+        sb.append(word);
     }
 
     /**
