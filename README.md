@@ -1,10 +1,12 @@
+![License](https://img.shields.io/badge/license-GPL-blue.svg)
+
 # Dictionary-LT-generator
 
 This is a tool to generate a dictionary of lithuanian passwords, which can be used for dictionary attacks on lithuanian passwords. You need to have at least one basic dictionary and understanding of what you are trying to achieve. Without basic dictionary, this application is useless and it is your responsibility to get or create it.
 
 __DISCLAIMER__: I take no responsibility for any misuse of this application. It was created only for penetration testing and nothing else.
 
-<img src="http://i63.tinypic.com/akg9q1.png">
+<p align="center"><img src="http://i63.tinypic.com/1609dmp.png" /></p>
 
 ## What does it actually do?
 
