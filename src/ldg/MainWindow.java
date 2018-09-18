@@ -59,7 +59,7 @@ public class MainWindow extends javax.swing.JFrame {
         jCheckBox_lowercase = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Lithuanian dictionary generator v2.07");
+        setTitle("Lithuanian dictionary generator v2.08");
         setMinimumSize(new java.awt.Dimension(650, 600));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 2, 12)); // NOI18N
