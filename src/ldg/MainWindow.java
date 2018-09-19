@@ -366,6 +366,9 @@ public class MainWindow extends javax.swing.JFrame {
         boolean appendText = jCheckBox_appendText.isSelected();
         boolean appendTextExportOriginals = jCheckBox_exportNotAppendedWords.isSelected();
         String appendTextRawText = jTextArea_appendText.getText().trim();
+        
+        //======================================================================
+        //======================================================================
 
         // Validate user provided input::
         if ("".equals(inputDictionaryFilePath)) {
@@ -400,6 +403,9 @@ public class MainWindow extends javax.swing.JFrame {
                 return;
             }
         }
+        
+        //======================================================================
+        //======================================================================
 
         // Count lines in input file:
         double linesCount = 0;
@@ -431,6 +437,10 @@ public class MainWindow extends javax.swing.JFrame {
         // Create array from append text:
         String appendTextArray[] = appendTextRawText.split("\\n");
         
+        
+        //======================================================================
+        //======================================================================
+        
         // Get cores count:
         int coresCount = Runtime.getRuntime().availableProcessors();
 
@@ -456,26 +466,27 @@ public class MainWindow extends javax.swing.JFrame {
             ));
         }
 
+        // Wait for all threads to finish:
         executor.shutdown();
         try {
             executor.awaitTermination(1, TimeUnit.DAYS); // Wait until everything is finished!
         } catch (InterruptedException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        long lEndTime = System.nanoTime();
-        long output = lEndTime - lStartTime;
-        showPopup("Finished in " + (output / 1000000) + " miliseconds!", "Completed!", JOptionPane.INFORMATION_MESSAGE);
-
-        jProgressBar_progressBar.setValue(0);
-        jProgressBar_progressBar.setString("Completed!");
-
-        // Closes all buffers
+        
+        // All threads completed - close all input/output files buffers:
         try {
             workersManager.cleanUp();
         } catch (IOException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        // Show 'completed' messages:
+        long lEndTime = System.nanoTime();
+        long output = lEndTime - lStartTime;
+        showPopup("Finished in " + (output / 1000000) + " miliseconds!", "Completed!", JOptionPane.INFORMATION_MESSAGE);
+        jProgressBar_progressBar.setValue(0);
+        jProgressBar_progressBar.setString("Completed!");
 
         // Enable start button:
         jButton_generate.setEnabled(true);
