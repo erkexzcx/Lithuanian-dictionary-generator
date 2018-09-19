@@ -1,6 +1,4 @@
-![License](https://img.shields.io/badge/license-GPL-blue.svg)
-
-# Lithuanian dictionary generator
+# Lithuanian dictionary generator ![License](https://img.shields.io/badge/license-GPL-blue.svg)
 
 Lithuanian dictionary generator is a tool designed to generate password-like words dictionary, which is used for cracking common Lithuanian passwords. In order to generate such dictionary, you need to get a list of simple basic Lithuanian words in a form of text file.
 
