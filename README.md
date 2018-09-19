@@ -2,21 +2,21 @@
 
 # Lithuanian dictionary generator
 
-This is a tool to generate a dictionary of lithuanian passwords, which can be used for dictionary attacks on lithuanian passwords. You need to have at least one basic dictionary and understanding of what you are trying to achieve. Without basic dictionary, this application is useless and it is your responsibility to get or create it.
+Lithuanian dictionary generator is a tool designed to generate passwords list (dictionary), which is used for cracking common Lithuanian passwords. In order to generate such dictionary, you need to get a list of simple basic Lithuanian words in a form of text file.
 
 __DISCLAIMER__: I take no responsibility for any misuse of this application. It was created only for penetration testing and nothing else.
 
 <p align="center"><img src="http://i63.tinypic.com/1609dmp.png" /></p>
 
-## What does it actually do?
+## How does it work
 
-Consider you have a file `c:\input_dictionary.txt` with the following contents (yeah, literally 2 words for the sake of simplicity):
+For example, you have a file `c:\input_dictionary.txt` with the following contents:
 ```
 erikas
 petras
 ```
 
-And you want to have a complete dictionary like this:
+and out of those 2 words in your `c:\input_dictionary.txt` you want to generate `c:\input_dictionary-generated.txt` file with the following contents:
 ```
 Petras
 petras
@@ -43,14 +43,13 @@ Eriko42
 eriko10
 eriko42
 ```
+And this is the purpose of this application - out of a few words it can generate extremelly large password-like words dictionary within seconds.
 
-And this is exactly what this app does. You can literally create huge dictionaries out of few basic words, which are suitable for dictionary attacks on lithuanian passwords.
-
-## How do I use it?
+## More information
 
 ### Checkboxes
-Hover the mouse over any checkbox to understand what it does. The text next to checkboxes is quite self explanatory and easy to understand.
+Hover mouse over any checkbox to show the tip.
 
 ### Textareas
-1. __Endings textarea__ - these endings must be provided in a form of `change_what=>change_to`. Separated by new line. You should not edit this textarea, unless you need to change some very rare endings of some words. P.S. If you find such words - create issue on Github for me to fix this.
-2. __Append words textarea__ - these must be separated by new line. Mostly used for numbers, but you can append anything you want, like `###` or `-admin`. Depends on what you are trying to achieve.
+1. __Replace endings__ textarea - Endings must be provided in a form of `change_what=>change_to` and such pairs should be separated by new line. There should be no need to edit this textarea at all, unless you find some word endings that are not added by default. Also create issue on Github so I can add missing endings.
+2. __Append text__ textarea - Text should be separated by new line. Initially, this textarea was intended for numbers only, but you can use it to append any text you want.
