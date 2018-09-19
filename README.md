@@ -16,7 +16,7 @@ erikas
 petras
 ```
 
-and out of those 2 words in your `c:\input_dictionary.txt` you want to generate `c:\input_dictionary-generated.txt` file with the following contents:
+and with those words you want to generate new `c:\input_dictionary-generated.txt` file with the following contents:
 ```
 Petras
 petras
