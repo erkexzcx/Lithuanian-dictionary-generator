@@ -8,7 +8,7 @@ __DISCLAIMER__: I take no responsibility for any misuse of this application. It 
 
 <p align="center"><img src="http://i63.tinypic.com/1609dmp.png" /></p>
 
-## How does it work
+## About
 
 For example, you have a file `c:\input_dictionary.txt` with the following contents:
 ```
