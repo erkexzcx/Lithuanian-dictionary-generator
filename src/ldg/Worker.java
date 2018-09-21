@@ -20,6 +20,13 @@ public class Worker implements Runnable {
     List<String> list2 = new ArrayList<>(); // Secondary list
 
     StringBuilder sb = new StringBuilder(); // Build string here before writting it to file
+    
+    /*
+    Reading words from input dictionary as well as writting words to output
+    dictionary requires syncrhonization. However, synchronization is expensive,
+    so we use 'sb' object to build a local "buffer", which we later write to
+    output dictionary.
+    */
 
     public Worker(
             WorkersManager workersManager,
