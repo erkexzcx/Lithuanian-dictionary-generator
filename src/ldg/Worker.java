@@ -20,14 +20,13 @@ public class Worker implements Runnable {
     List<String> list2 = new ArrayList<>(); // Secondary list
 
     StringBuilder sb = new StringBuilder(); // Build string here before writting it to file
-    
+
     /*
     Reading words from input dictionary as well as writting words to output
     dictionary requires syncrhonization. However, synchronization is expensive,
     so we use 'sb' object to build a local "buffer", which we later write to
     output dictionary.
-    */
-
+     */
     public Worker(
             WorkersManager workersManager,
             boolean changeEndings,
@@ -125,23 +124,7 @@ public class Worker implements Runnable {
                 list2.clear();
 
                 //##############################################################
-            } else if (!changeEndings && appendText) {
-                //##############################################################
-                //*** Append only ***//
-
-                if (appendTextExportOriginals) {
-                    writeToSB(list1);
-                }
-
-                list1.forEach((wordFromTheList) -> {
-                    for (String a : appendTextArray) {
-                        writeToSBRaw(wordFromTheList);
-                        writeToSB(a);
-                    }
-                });
-
-                //##############################################################
-            } else if (changeEndings && !appendText) {
+            } else if (changeEndings) {
                 //##############################################################
                 //*** Change only ***//
 
@@ -162,6 +145,22 @@ public class Worker implements Runnable {
                             writeToSB(ep.getTo());
                             break; // Go to the next word in the list1.
                         }
+                    }
+                });
+
+                //##############################################################
+            } else if (appendText) {
+                //##############################################################
+                //*** Append only ***//
+
+                if (appendTextExportOriginals) {
+                    writeToSB(list1);
+                }
+
+                list1.forEach((wordFromTheList) -> {
+                    for (String a : appendTextArray) {
+                        writeToSBRaw(wordFromTheList);
+                        writeToSB(a);
                     }
                 });
 
