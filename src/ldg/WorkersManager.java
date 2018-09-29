@@ -48,7 +48,7 @@ public class WorkersManager {
      * @param updateUi
      * @return string if read. null if end of file.
      */
-    public synchronized String readWord(boolean updateUi) {
+    public synchronized String readFromFile(boolean updateUi) {
 
         progressCounter++;
         if (updateUi) {
@@ -67,13 +67,13 @@ public class WorkersManager {
     }
 
     /**
-     * Writes given word to output dictionary file.
+     * Writes given text to output dictionary file.
      *
-     * @param word string to write
+     * @param text to write to file.
      */
-    public synchronized void writeWord(String word) {
+    public synchronized void writeToFile(String text) {
         try {
-            bufferedWriter.write(word);
+            bufferedWriter.write(text);
             //bufferedWriter.flush(); // Not needed. Buffer will automatically flush (saves contents to disk) when fills up.
         } catch (IOException ex) {
             Logger.getLogger(WorkersManager.class.getName()).log(Level.SEVERE, null, ex);

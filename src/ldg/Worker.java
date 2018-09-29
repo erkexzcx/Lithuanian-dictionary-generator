@@ -58,7 +58,7 @@ public class Worker implements Runnable {
         boolean changeAndAppend = (changeEndings && appendText);
         boolean lowercaseAndUppercase = (uppercase && lowercase);
 
-        while ((word = workersManager.readWord(updateUi)) != null) {
+        while ((word = workersManager.readFromFile(updateUi)) != null) {
 
             // Change case of first letter as per user request and put it into list1:
             if (lowercaseAndUppercase) {
@@ -203,7 +203,7 @@ public class Worker implements Runnable {
      */
     private void flushSB() {
         // Write to file:
-        workersManager.writeWord(sb.toString());
+        workersManager.writeToFile(sb.toString());
         // Also reset it:
         sb.setLength(0);
     }
