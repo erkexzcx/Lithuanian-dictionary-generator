@@ -58,7 +58,7 @@ public class MainWindow extends javax.swing.JFrame {
         jCheckBox_lowercase = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Lithuanian dictionary generator v2.08");
+        setTitle("Lithuanian dictionary generator v2.09");
         setMinimumSize(new java.awt.Dimension(650, 600));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 2, 12)); // NOI18N
@@ -319,7 +319,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
 
         // Set input dictionary path to text field:
-        var inputFullPath = jFileChooser_fileChooser.getSelectedFile().getAbsolutePath();
+        String inputFullPath = jFileChooser_fileChooser.getSelectedFile().getAbsolutePath();
         jTextField_inputDictionaryPath.setText(inputFullPath);
 
         // Set output dictionary path to text field:
@@ -327,14 +327,14 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_browseInputDictionaryActionPerformed
 
     private void jCheckBox_endingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_endingsActionPerformed
-        var changeEndings = jCheckBox_endings.isSelected();
+        boolean changeEndings = jCheckBox_endings.isSelected();
         jPanel_endings.setEnabled(changeEndings);
         jCheckBox_exportWordsWithOriginalEndings.setEnabled(changeEndings);
         jTextArea_endings.setEnabled(changeEndings);
     }//GEN-LAST:event_jCheckBox_endingsActionPerformed
 
     private void jCheckBox_appendTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_appendTextActionPerformed
-        var appendText = jCheckBox_appendText.isSelected();
+        boolean appendText = jCheckBox_appendText.isSelected();
         jPanel_appendText.setEnabled(appendText);
         jCheckBox_exportNotAppendedWords.setEnabled(appendText);
         jTextArea_appendText.setEnabled(appendText);

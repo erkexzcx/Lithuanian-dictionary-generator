@@ -6,7 +6,7 @@ import java.io.IOException;
 public class Validation {
 
     public static boolean validEndings(String text) {
-        var trimmed = text.trim();
+        String trimmed = text.trim();
         if ("".equals(trimmed)) {
             return false;
         }
