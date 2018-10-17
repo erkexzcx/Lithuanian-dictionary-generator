@@ -46,8 +46,8 @@ And this is the purpose of this application - out of a few words it can generate
 ## More information
 
 ### Checkboxes
-Hover mouse over any checkbox to show the tip.
+Hover mouse over any checkbox to show the tooltip.
 
 ### Textareas
-1. __Replace endings__ textarea - Endings must be provided in a form of `change_what=>change_to` and such pairs should be separated by new line. There should be no need to edit this textarea at all, unless you find some word endings that are not added by default. Also create issue on Github so I can add missing endings.
-2. __Append text__ textarea - Text should be separated by new line. Initially, this textarea was intended for numbers only, but you can use it to append any text you want.
+1. __Replace endings__ textarea - Endings must be provided in a form of `change_what=>change_to` and such pairs must be separated by new line. There should be no need to edit this textarea at all, unless you find some word endings that are not added by default. Also create issue on Github so I can add missing endings.
+2. __Append text__ textarea - Text must be separated by new line. Initially, this textarea was intended for numbers only, but you can use it to append any text you want.
