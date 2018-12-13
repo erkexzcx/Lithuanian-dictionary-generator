@@ -1,33 +1,41 @@
-package ldg;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Worker implements Runnable {
+public class Worker extends Thread {
 
-    WorkersManager workersManager;
-    boolean changeEndings;
-    boolean changeEndingsExportOriginals;
-    boolean appendText;
-    boolean appendTextExportOriginals;
-    boolean uppercase;
-    boolean lowercase;
-    EndingPair[] endingPairsArray;
-    String appendTextArray[];
-    boolean updateUi;
-
-    List<String> list1 = new ArrayList<>(); // Primary list
-    List<String> list2 = new ArrayList<>(); // Secondary list
-
-    StringBuilder sb = new StringBuilder(); // Build string here before writting it to file
+    private static WorkersManager workersManager;
+    private static boolean changeEndings;
+    private static boolean changeEndingsExportOriginals;
+    private static boolean appendText;
+    private static boolean appendTextExportOriginals;
+    private static boolean uppercase;
+    private static boolean lowercase;
+    private static EndingPair[] endingPairsArray;
+    private static String appendTextArray[];
+	
+    private static boolean changeAndAppend;
+    private static boolean lowercaseAndUppercase;
 
     /*
     Reading words from input dictionary as well as writting words to output
     dictionary requires syncrhonization. However, synchronization is expensive,
     so we use 'sb' object to build a local "buffer", which we later write to
-    output dictionary.
+    output dictionary (file).
      */
-    public Worker(
+    private final StringBuilder sb = new StringBuilder(); // Build string here before writting it to file
+	
+    private List<String> list1; // Primary list
+    private List<String> list2; // Secondary list
+	
+	private final boolean updateUi;
+
+    public Worker(boolean updateUi) {
+        this.updateUi = updateUi;
+    }
+	
+    public static void setConfiguration(
             WorkersManager workersManager,
             boolean changeEndings,
             boolean changeEndingsExportOriginals,
@@ -36,28 +44,31 @@ public class Worker implements Runnable {
             boolean uppercase,
             boolean lowercase,
             EndingPair endingPairsArray[],
-            String[] appendTextArray,
-            boolean updateUi) {
-        this.workersManager = workersManager;
-        this.changeEndings = changeEndings;
-        this.changeEndingsExportOriginals = changeEndingsExportOriginals;
-        this.appendText = appendText;
-        this.appendTextExportOriginals = appendTextExportOriginals;
-        this.uppercase = uppercase;
-        this.lowercase = lowercase;
-        this.endingPairsArray = endingPairsArray;
-        this.appendTextArray = appendTextArray;
-        this.updateUi = updateUi;
+            String[] appendTextArray){
+        Worker.workersManager = workersManager;
+        Worker.changeEndings = changeEndings;
+        Worker.changeEndingsExportOriginals = changeEndingsExportOriginals;
+        Worker.appendText = appendText;
+        Worker.appendTextExportOriginals = appendTextExportOriginals;
+        Worker.uppercase = uppercase;
+        Worker.lowercase = lowercase;
+        Worker.endingPairsArray = endingPairsArray;
+        Worker.appendTextArray = appendTextArray;
+		
+		// Additional variables:
+		changeAndAppend = (changeEndings && appendText);
+		lowercaseAndUppercase = (uppercase && lowercase);
     }
 
     @Override
     public void run() {
+		
+		// Since we already know the max required capacity of the list - optimise then:
+		int maxListSize = 4 + (4 * appendTextArray.length);
+		list1 = new ArrayList<>(maxListSize);
+		list2 = new ArrayList<>(maxListSize);
+		
         String word;
-        String tmp;
-
-        boolean changeAndAppend = (changeEndings && appendText);
-        boolean lowercaseAndUppercase = (uppercase && lowercase);
-
         while ((word = workersManager.readFromFile(updateUi)) != null) {
 
             // Change case of first letter as per user request and put it into list1:
@@ -115,8 +126,8 @@ public class Worker implements Runnable {
 
                 list2.forEach((wordFromTheList) -> {
                     for (String a : appendTextArray) {
-                        writeToSBRaw(wordFromTheList);
-                        writeToSB(a);
+                        writeToSb(wordFromTheList);
+                        writeToSbLine(a);
                     }
                 });
 
@@ -141,8 +152,8 @@ public class Worker implements Runnable {
                         // If word ends with X
                         if (wordFromTheList.endsWith(ep.getFrom())) {
                             // Change ending with X
-                            writeToSBRaw(wordFromTheList.substring(0, wordLength - ep.getFromLength()));
-                            writeToSB(ep.getTo());
+                            writeToSb(wordFromTheList.substring(0, wordLength - ep.getFromLength()));
+                            writeToSbLine(ep.getTo());
                             break; // Go to the next word in the list1.
                         }
                     }
@@ -159,8 +170,8 @@ public class Worker implements Runnable {
 
                 list1.forEach((wordFromTheList) -> {
                     for (String a : appendTextArray) {
-                        writeToSBRaw(wordFromTheList);
-                        writeToSB(a);
+                        writeToSb(wordFromTheList);
+                        writeToSbLine(a);
                     }
                 });
 
@@ -190,11 +201,11 @@ public class Worker implements Runnable {
         });
     }
 
-    private void writeToSB(String word) {
+    private void writeToSbLine(String word) {
         sb.append(word).append('\n');
     }
 
-    private void writeToSBRaw(String word) {
+    private void writeToSb(String word) {
         sb.append(word);
     }
 

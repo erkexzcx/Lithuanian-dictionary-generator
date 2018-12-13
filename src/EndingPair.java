@@ -1,4 +1,4 @@
-package ldg;
+
 
 public class EndingPair {
 
